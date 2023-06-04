@@ -78,9 +78,9 @@
 		7000498D2A1DAE5B000426B5 /* Intellifit */ = {
 			isa = PBXGroup;
 			children = (
-				3FDC1F952A25688A009E175A /* Views */,
 				7000498E2A1DAE5B000426B5 /* IntellifitApp.swift */,
 				700049902A1DAE5B000426B5 /* ContentView.swift */,
+				3FDC1F952A25688A009E175A /* Views */,
 				700049922A1DAE5C000426B5 /* Assets.xcassets */,
 				700049942A1DAE5C000426B5 /* Preview Content */,
 				3FDC1F982A2570C3009E175A /* Storyboard.storyboard */,
