@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		3FAE95EF2A293B0F0002DC4C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAE95EE2A293B0F0002DC4C /* ViewController.swift */; };
+		3FBAFD532A2C5DFD0049A77C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBAFD522A2C5DFD0049A77C /* HomeView.swift */; };
+		3FBAFD552A2C612E0049A77C /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBAFD542A2C612E0049A77C /* WorkoutView.swift */; };
+		3FBAFD572A2C61440049A77C /* FoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBAFD562A2C61440049A77C /* FoodView.swift */; };
+		3FBAFD592A2C61510049A77C /* SleepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBAFD582A2C61510049A77C /* SleepView.swift */; };
+		3FBAFD5B2A2C65C20049A77C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBAFD5A2A2C65C20049A77C /* SettingsView.swift */; };
 		3FDC1F992A2570C3009E175A /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FDC1F982A2570C3009E175A /* Storyboard.storyboard */; };
 		7000498F2A1DAE5B000426B5 /* IntellifitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7000498E2A1DAE5B000426B5 /* IntellifitApp.swift */; };
 		700049912A1DAE5B000426B5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700049902A1DAE5B000426B5 /* ContentView.swift */; };
@@ -17,6 +22,11 @@
 
 /* Begin PBXFileReference section */
 		3FAE95EE2A293B0F0002DC4C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3FBAFD522A2C5DFD0049A77C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		3FBAFD542A2C612E0049A77C /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
+		3FBAFD562A2C61440049A77C /* FoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodView.swift; sourceTree = "<group>"; };
+		3FBAFD582A2C61510049A77C /* SleepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepView.swift; sourceTree = "<group>"; };
+		3FBAFD5A2A2C65C20049A77C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3FDC1F982A2570C3009E175A /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		7000498B2A1DAE5B000426B5 /* Intellifit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Intellifit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7000498E2A1DAE5B000426B5 /* IntellifitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntellifitApp.swift; sourceTree = "<group>"; };
@@ -39,7 +49,11 @@
 		3FDC1F952A25688A009E175A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				700049902A1DAE5B000426B5 /* ContentView.swift */,
+				3FBAFD522A2C5DFD0049A77C /* HomeView.swift */,
+				3FBAFD542A2C612E0049A77C /* WorkoutView.swift */,
+				3FBAFD562A2C61440049A77C /* FoodView.swift */,
+				3FBAFD582A2C61510049A77C /* SleepView.swift */,
+				3FBAFD5A2A2C65C20049A77C /* SettingsView.swift */,
 				3FAE95EE2A293B0F0002DC4C /* ViewController.swift */,
 			);
 			path = Views;
@@ -64,8 +78,9 @@
 		7000498D2A1DAE5B000426B5 /* Intellifit */ = {
 			isa = PBXGroup;
 			children = (
-				7000498E2A1DAE5B000426B5 /* IntellifitApp.swift */,
 				3FDC1F952A25688A009E175A /* Views */,
+				7000498E2A1DAE5B000426B5 /* IntellifitApp.swift */,
+				700049902A1DAE5B000426B5 /* ContentView.swift */,
 				700049922A1DAE5C000426B5 /* Assets.xcassets */,
 				700049942A1DAE5C000426B5 /* Preview Content */,
 				3FDC1F982A2570C3009E175A /* Storyboard.storyboard */,
@@ -152,9 +167,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FBAFD572A2C61440049A77C /* FoodView.swift in Sources */,
+				3FBAFD5B2A2C65C20049A77C /* SettingsView.swift in Sources */,
+				3FBAFD592A2C61510049A77C /* SleepView.swift in Sources */,
 				3FAE95EF2A293B0F0002DC4C /* ViewController.swift in Sources */,
+				3FBAFD532A2C5DFD0049A77C /* HomeView.swift in Sources */,
 				700049912A1DAE5B000426B5 /* ContentView.swift in Sources */,
 				7000498F2A1DAE5B000426B5 /* IntellifitApp.swift in Sources */,
+				3FBAFD552A2C612E0049A77C /* WorkoutView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
