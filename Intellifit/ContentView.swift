@@ -10,9 +10,10 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
+            Image("Logo")
+                .resizable()
+                .scaledToFit()
+                .frame( height: 50)
             Text("Intellifit!")
             TabView {
                 HomeView()
