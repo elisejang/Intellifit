@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>48078341731-f9v7mm777g390gv9rbum4m4dprtf8m1d.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.48078341731-f9v7mm777g390gv9rbum4m4dprtf8m1d</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBdbKjfArwqHo-j4VtM56gTqq_Ua4e39JE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>48078341731</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>Intellifit.Intellifit</string>
+	<key>PROJECT_ID</key>
+	<string>intellifit-firestore</string>
+	<key>STORAGE_BUCKET</key>
+	<string>intellifit-firestore.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:48078341731:ios:db3bfbb6d0d54f94545a56</string>
+</dict>
+</plist>

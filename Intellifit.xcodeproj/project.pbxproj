@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11F85AAC2A307A1E00695069 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11F85AAB2A307A1E00695069 /* GoogleService-Info.plist */; };
 		3FAE95EF2A293B0F0002DC4C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAE95EE2A293B0F0002DC4C /* ViewController.swift */; };
 		3FBAFD532A2C5DFD0049A77C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBAFD522A2C5DFD0049A77C /* HomeView.swift */; };
 		3FBAFD552A2C612E0049A77C /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBAFD542A2C612E0049A77C /* WorkoutView.swift */; };
@@ -18,9 +19,11 @@
 		700049912A1DAE5B000426B5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700049902A1DAE5B000426B5 /* ContentView.swift */; };
 		700049932A1DAE5C000426B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 700049922A1DAE5C000426B5 /* Assets.xcassets */; };
 		700049962A1DAE5C000426B5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 700049952A1DAE5C000426B5 /* Preview Assets.xcassets */; };
+		CACC280F54C78129AF606354 /* Pods_Intellifit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4E7DC622FEE19C6BBDD309E /* Pods_Intellifit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11F85AAB2A307A1E00695069 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3FAE95EE2A293B0F0002DC4C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3FBAFD522A2C5DFD0049A77C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3FBAFD542A2C612E0049A77C /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
@@ -33,6 +36,9 @@
 		700049902A1DAE5B000426B5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		700049922A1DAE5C000426B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		700049952A1DAE5C000426B5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A41D8E44E7F9C984CF5535E8 /* Pods-Intellifit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Intellifit.release.xcconfig"; path = "Target Support Files/Pods-Intellifit/Pods-Intellifit.release.xcconfig"; sourceTree = "<group>"; };
+		BA26E91D7AA2C8305322C4F8 /* Pods-Intellifit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Intellifit.debug.xcconfig"; path = "Target Support Files/Pods-Intellifit/Pods-Intellifit.debug.xcconfig"; sourceTree = "<group>"; };
+		E4E7DC622FEE19C6BBDD309E /* Pods_Intellifit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Intellifit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CACC280F54C78129AF606354 /* Pods_Intellifit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +71,8 @@
 			children = (
 				7000498D2A1DAE5B000426B5 /* Intellifit */,
 				7000498C2A1DAE5B000426B5 /* Products */,
+				A346643066D9FE99A0143865 /* Pods */,
+				A3FF632C8FF1B72A1CB1128E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,6 +87,7 @@
 		7000498D2A1DAE5B000426B5 /* Intellifit */ = {
 			isa = PBXGroup;
 			children = (
+				11F85AAB2A307A1E00695069 /* GoogleService-Info.plist */,
 				7000498E2A1DAE5B000426B5 /* IntellifitApp.swift */,
 				700049902A1DAE5B000426B5 /* ContentView.swift */,
 				3FDC1F952A25688A009E175A /* Views */,
@@ -96,6 +106,23 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		A346643066D9FE99A0143865 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BA26E91D7AA2C8305322C4F8 /* Pods-Intellifit.debug.xcconfig */,
+				A41D8E44E7F9C984CF5535E8 /* Pods-Intellifit.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		A3FF632C8FF1B72A1CB1128E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E4E7DC622FEE19C6BBDD309E /* Pods_Intellifit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -103,9 +130,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 700049992A1DAE5C000426B5 /* Build configuration list for PBXNativeTarget "Intellifit" */;
 			buildPhases = (
+				90138174327EA5BB2A2A7CF0 /* [CP] Check Pods Manifest.lock */,
 				700049872A1DAE5B000426B5 /* Sources */,
 				700049882A1DAE5B000426B5 /* Frameworks */,
 				700049892A1DAE5B000426B5 /* Resources */,
+				8B7A293D79CCFDF37474AA23 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -155,12 +184,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				700049962A1DAE5C000426B5 /* Preview Assets.xcassets in Resources */,
+				11F85AAC2A307A1E00695069 /* GoogleService-Info.plist in Resources */,
 				700049932A1DAE5C000426B5 /* Assets.xcassets in Resources */,
 				3FDC1F992A2570C3009E175A /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8B7A293D79CCFDF37474AA23 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Intellifit/Pods-Intellifit-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Intellifit/Pods-Intellifit-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Intellifit/Pods-Intellifit-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		90138174327EA5BB2A2A7CF0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Intellifit-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		700049872A1DAE5B000426B5 /* Sources */ = {
@@ -297,6 +369,7 @@
 		};
 		7000499A2A1DAE5C000426B5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BA26E91D7AA2C8305322C4F8 /* Pods-Intellifit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -304,6 +377,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Intellifit/Preview Content\"";
+				DEVELOPMENT_TEAM = 3DQ35HRTQ2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -326,6 +400,7 @@
 		};
 		7000499B2A1DAE5C000426B5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A41D8E44E7F9C984CF5535E8 /* Pods-Intellifit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -333,6 +408,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Intellifit/Preview Content\"";
+				DEVELOPMENT_TEAM = 3DQ35HRTQ2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
