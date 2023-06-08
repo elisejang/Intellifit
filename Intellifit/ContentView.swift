@@ -36,10 +36,10 @@ struct ContentView: View {
                         Image(systemName: "moon.fill")
                         Text("Sleep")
                     }
-                SettingsView()
+                ProfileView()
                     .tabItem() {
-                        Image(systemName: "gearshape")
-                        Text("Settings")
+                        Image(systemName: "person.crop.circle")
+                        Text("Profile")
                     }
             }
         }
