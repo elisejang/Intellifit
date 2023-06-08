@@ -16,13 +16,13 @@ struct IntellifitApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            EntryView()
         }
     }
 }
 
 struct Previews_IntellifitApp_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        EntryView()
     }
 }
