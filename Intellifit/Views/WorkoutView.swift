@@ -144,31 +144,92 @@ struct WorkoutView: View {
     }
 }
 
+//struct RecView: View {
+//    @Environment(\.presentationMode) var presentationMode
+//    @State var isFlipped = false
+//    @State var backDegree = 0.0
+//    @State var frontDegree = -90.0
+//    let durationAndDelay : CGFloat = 0.3
+//    @State var counts = Array(repeating: 0, count: 6)
+//
+//    func flip () {
+//            isFlipped = !isFlipped
+//            if isFlipped {
+//                withAnimation(.linear(duration: durationAndDelay)) {
+//                    backDegree = 90
+//                }
+//                withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)){
+//                    frontDegree = 0
+//                }
+//            } else {
+//                withAnimation(.linear(duration: durationAndDelay)) {
+//                    frontDegree = -90
+//                }
+//                withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)){
+//                    backDegree = 0
+//                }
+//            }
+//        }
+//
+//    var body: some View {
+//        VStack {
+//            Button(action: {
+//                presentationMode.wrappedValue.dismiss()
+//            }) {
+//                Image("downarrow")
+//                    .resizable()
+//                    .frame(width: 40, height: 40)
+//
+//            }
+//            ScrollView(.vertical) {
+//                LazyVStack(spacing: 10) {
+//                    Spacer().frame(width: 1)
+//                    ForEach(1..<6) { index in
+//                        let imageName = "rec\(index)"
+//                        @State var count = 0
+//
+////                        let imageName = "tennis"
+//
+//                        ZStack {
+//                        //front of card
+//                            CardFront(w: 300, h: 150, imgName: imageName,degree: $frontDegree)
+//                            CardBack(w: 300, h: 150, imgName: imageName, size: true, degree: $backDegree)
+//
+//                        }.onTapGesture {
+//                            flip ()
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
 struct RecView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State var isFlipped = false
-    @State var backDegree = 0.0
-    @State var frontDegree = -90.0
-    let durationAndDelay : CGFloat = 0.3
+    @State var isFlipped = Array(repeating: false, count: 6)
+    @State var backDegree = Array(repeating: 0.0, count: 6)
+    @State var frontDegree = Array(repeating: -90.0, count: 6)
+    let durationAndDelay: CGFloat = 0.3
+    @State var counts = Array(repeating: 0, count: 6)
     
-    func flip () {
-            isFlipped = !isFlipped
-            if isFlipped {
-                withAnimation(.linear(duration: durationAndDelay)) {
-                    backDegree = 90
-                }
-                withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)){
-                    frontDegree = 0
-                }
-            } else {
-                withAnimation(.linear(duration: durationAndDelay)) {
-                    frontDegree = -90
-                }
-                withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)){
-                    backDegree = 0
-                }
+    func flip(index: Int) {
+        isFlipped[index] = !isFlipped[index]
+        if isFlipped[index] {
+            withAnimation(.linear(duration: durationAndDelay)) {
+                backDegree[index] = 90
+            }
+            withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)) {
+                frontDegree[index] = 0
+            }
+        } else {
+            withAnimation(.linear(duration: durationAndDelay)) {
+                frontDegree[index] = -90
+            }
+            withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)) {
+                backDegree[index] = 0
             }
         }
+    }
     
     var body: some View {
         VStack {
@@ -178,39 +239,19 @@ struct RecView: View {
                 Image("downarrow")
                     .resizable()
                     .frame(width: 40, height: 40)
-                
             }
             ScrollView(.vertical) {
                 LazyVStack(spacing: 10) {
                     Spacer().frame(width: 1)
-                    ForEach(1..<6) { index in
-                        let imageName = "rec\(index)"
-                        @State var count = 0
-
-//                        let imageName = "tennis"
-
+                    ForEach(0..<5) { index in
+                        let imageName = "rec\(index + 1)"
+                        
                         ZStack {
-                        //front of card
-                            CardFront(w: 300, h: 150, imgName: imageName,degree: $frontDegree)
-                            CardBack(w: 300, h: 150, imgName: imageName, size: true, degree: $backDegree)
-                            HStack {
-                                Button(action: {
-                                    count -= 1
-                                }) {
-                                    Image(systemName: "minus.circle")
-                                }
-                                .font(.largeTitle)
-                                
-                                Button(action: {
-                                    count += 1
-                                }) {
-                                    Image(systemName: "plus.circle")
-                                }
-                                .font(.largeTitle)
-                                
-                            }
-                        }.onTapGesture {
-                            flip ()
+                            CardFront(w: 300, h: 150, imgName: imageName, degree: $frontDegree[index], index: index) {flip(index: index)}
+                            CardBack(w: 300, h: 150, imgName: imageName, size: true, degree: $backDegree[index], count: $counts[index])
+                        }
+                        .onTapGesture {
+                            flip(index: index)
                         }
                     }
                 }
@@ -218,132 +259,149 @@ struct RecView: View {
         }
     }
 }
+
+
 struct CardFront: View {
-    let w : CGFloat
+    let w: CGFloat
     let h: CGFloat
-    var imgName : String
-    @Binding var degree : Double
+    var imgName: String
+    @Binding var degree: Double
+    var index: Int
+    var flipAction: () -> Void
     
     var body: some View {
-        ZStack{
-            if UIImage(named: imgName) != nil {
-                Image(imgName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: w, height: h)
-                    .cornerRadius(10)
-                
-                Text(imgName)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-            }else{
-                Rectangle()
-                    .fill(Color.gray)
-                    .frame(width: w, height: h)
-                    .cornerRadius(10)
-                
-                Text(imgName)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-            }
-        }.rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
-    }
-}
-
-struct CardBack: View {
-    let w : CGFloat
-    let h: CGFloat
-    var imgName : String
-    var size : Bool
-    @Binding var degree : Double
-    //if true then you have big
-    //if false then you have small
-    @State private var count = 0
-    var body: some View {
-        ZStack{
+        ZStack {
             Rectangle()
-                .fill(Color.black)
+                .fill(Color.gray)
                 .frame(width: w, height: h)
                 .cornerRadius(10)
-            if size == true { //add buttons
+            if degree >= 0 {
+                if let image = UIImage(named: imgName) {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: w, height: h)
+                        .cornerRadius(10)
+                }
                 Text(imgName)
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
-                //Hours button
-                Text("Hour \(count)")
-//                HStack {
-//                    Button(action: {
-//                        count -= 1
-//                    }) {
-//                        Image(systemName: "minus.circle")
-//                    }
-//                    .font(.largeTitle)
-//
-//                    Button(action: {
-//                        count += 1
-//                    }) {
-//                        Image(systemName: "plus.circle")
-//                    }
-//                    .font(.largeTitle)
-//                }
-                Text("Total Calories")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-            }else{
-                
             }
-        }.rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
-        
+        }
+        .rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
+        .onTapGesture {
+            flipAction() // Call the flip action closure
+        }
+        .id(index) // Add an identifier to ensure proper view update
     }
 }
-    
 
 
+
+
+struct CardBack: View {
+    let w: CGFloat
+    let h: CGFloat
+    var imgName: String
+    var size: Bool
+    @Binding var degree: Double
+    @Binding var count: Int
+
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .fill(Color.gray)
+                .frame(width: w, height: h)
+                .cornerRadius(10)
+            if degree >= 0 {
+                VStack {
+                    Text("Hour \(count)")
+                    HStack {
+                        Button(action: {
+                            if count == 0 {
+                                count = 0
+                            } else {
+                                count -= 1
+                            }
+                        }) {
+                            Image(systemName: "minus.circle")
+                        }
+                        .font(.largeTitle)
+
+                        Button(action: {
+                            count += 1
+                        }) {
+                            Image(systemName: "plus.circle")
+                        }
+                        .font(.largeTitle)
+                    }
+                    Text("Total Calories : #")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                }
+            }
+        }
+        .rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
+    }
+}
 
 
 
     
 struct PastView: View {
     @Environment(\.presentationMode) var presentationMode
+    @State var isFlipped = Array(repeating: false, count: 6)
+    @State var backDegree = Array(repeating: 0.0, count: 6)
+    @State var frontDegree = Array(repeating: -90.0, count: 6)
+    let durationAndDelay: CGFloat = 0.3
+    @State var counts = Array(repeating: 0, count: 6)
+    
+    func flip(index: Int) {
+        isFlipped[index] = !isFlipped[index]
+        if isFlipped[index] {
+            withAnimation(.linear(duration: durationAndDelay)) {
+                backDegree[index] = 90
+            }
+            withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)) {
+                frontDegree[index] = 0
+            }
+        } else {
+            withAnimation(.linear(duration: durationAndDelay)) {
+                frontDegree[index] = -90
+            }
+            withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)) {
+                backDegree[index] = 0
+            }
+        }
+    }
     
     var body: some View {
         VStack {
-            
             Button(action: {
                 presentationMode.wrappedValue.dismiss()
             }) {
                 Image("downarrow")
                     .resizable()
                     .frame(width: 40, height: 40)
-                
             }
-            
             ScrollView(.vertical) {
                 LazyVStack(spacing: 10) {
                     Spacer().frame(width: 1)
-                    ForEach(1..<6) { index in
-                        let imageName = "rec\(index)"
+                    ForEach(0..<5) { index in
+                        let imageName = "rec\(index + 1)"
+                        
                         ZStack {
-                        Image(imageName)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 300, height: 150)
-                            .cornerRadius(10)
-                                    
-                        Text(imageName)
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                                }
+                            CardFront(w: 300, h: 150, imgName: imageName, degree: $frontDegree[index], index: index) {flip(index: index)}
+                            CardBack(w: 300, h: 150, imgName: imageName, size: true, degree: $backDegree[index], count: $counts[index])
+                        }
+                        .onTapGesture {
+                            flip(index: index)
+                        }
                     }
                 }
             }
-            
-            
         }
     }
 }
