@@ -1,3 +1,5 @@
+
+
 //
 //  WorkoutView.swift
 //  Intellifit
@@ -105,6 +107,7 @@ struct WorkoutView: View {
                 
             }
             
+           
             
             ScrollView(.horizontal) {
                         LazyHStack(spacing: 10) {
@@ -206,11 +209,11 @@ struct WorkoutView: View {
 //}
 struct RecView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State var isFlipped = false
-    @State var backDegree = 0.0
-    @State var frontDegree = -90.0
-    @State var count = 0
-    let durationAndDelay : CGFloat = 0.3
+    @State var isFlipped = Array(repeating: false, count: 6)
+    @State var backDegree = Array(repeating: 0.0, count: 6)
+    @State var frontDegree = Array(repeating: -90.0, count: 6)
+    let durationAndDelay: CGFloat = 0.3
+    @State var counts = Array(repeating: 0, count: 6)
     
     func flip(index: Int) {
         isFlipped[index] = !isFlipped[index]
@@ -243,12 +246,9 @@ struct RecView: View {
             ScrollView(.vertical) {
                 LazyVStack(spacing: 10) {
                     Spacer().frame(width: 1)
-                    ForEach(1..<6) { index in
-                        let imageName = "rec\(index)"
-//                        @State var count = 0
-
-//                        let imageName = "tennis"
-
+                    ForEach(0..<5) { index in
+                        let imageName = "rec\(index + 1)"
+                        
                         ZStack {
                             CardFront(w: 300, h: 150, imgName: imageName, degree: $frontDegree[index], index: index) {flip(index: index)}
                             CardBack(w: 300, h: 150, imgName: imageName, size: true, degree: $backDegree[index], count: $counts[index])
@@ -273,45 +273,7 @@ struct CardFront: View {
     var flipAction: () -> Void
     
     var body: some View {
-        ZStack{
-            if UIImage(named: imgName) != nil {
-                Image(imgName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: w, height: h)
-                    .cornerRadius(10)
-                
-                Text(imgName)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-            }else{
-                Rectangle()
-                    .fill(Color.gray)
-                    .frame(width: w, height: h)
-                    .cornerRadius(10)
-                
-                Text(imgName)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-            }
-        }.rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
-    }
-}
-
-struct CardBack: View {
-    let w : CGFloat
-    let h: CGFloat
-    var imgName : String
-    var size : Bool
-    @Binding var degree : Double
-    //if true then you have big
-    //if false then you have small
-    @State private var count = 0
-    
-    var body: some View {
-        ZStack{
+        ZStack {
             Rectangle()
                 .fill(Color.gray)
                 .frame(width: w, height: h)
@@ -564,7 +526,6 @@ struct DayView: View {
     let day: Int
     let month: Int
     let year: Int
-    
     let workouts: [Workout] = [
         
         ///CHANGE DATA
@@ -579,7 +540,6 @@ struct DayView: View {
     var totalCalories: Int {
         workouts.reduce(0) { $0 + $1.calories }
     }
-    
     
     var date: Date? {
         var components = DateComponents()
@@ -621,20 +581,7 @@ struct DayView: View {
                 .padding(10)
             
             
-//            let workouts: [Workout] = [
-//
-//                ///CHANGE DATA
-//                ///
-//
-//                Workout(name: "Running", hours: 1.5, calories: 600),
-//                Workout(name: "Swimming", hours: 2.0, calories: 700),
-//                Workout(name: "Yoga", hours: 1.0, calories: 300)
-//
-//            ]
-//
-//            var totalCalories: Int {
-//                workouts.reduce(0) { $0 + $1.calories }
-//            }
+           
             
             
             if workouts.isEmpty {

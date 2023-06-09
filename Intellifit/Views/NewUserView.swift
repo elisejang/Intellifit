@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 struct NewUserView: View {
     @State private var isShowingNewUserPopUp = false
@@ -115,8 +116,62 @@ struct NewUserPopUp : View {
         )
     }
     
+//    func beginButtonTapped() {
+//        let fullName = "\(firstName) \(lastName)"
+//
+//        // Update the isNewUser state variable
+//        isNewUser = false
+//        isShowingHomeView = true
+//
+//        // Dismiss the pop-up view
+//        presentationMode.wrappedValue.dismiss()
+//    }
+    
+    // This function is responsible for creating a new user in our database and setting the values input in the 'New User' page equal to the fields of a User. It also creates ExerciseEntries and Meals subcollection with 1 empty document inside each.
     func beginButtonTapped() {
         let fullName = "\(firstName) \(lastName)"
+        let db = Firestore.firestore()  // <-- Create a reference to Firestore
+        
+        // Compute the user's age based on their birthdate
+        let now = Date()
+        let ageComponents = Calendar.current.dateComponents([.year], from: birthdate, to: now)
+        let age = ageComponents.year!
+        
+        // Create a new document in the "Users" collection
+        var ref: DocumentReference? = nil
+        ref = db.collection("Users").addDocument(data: [
+            "first_name": firstName,
+            "last_name": lastName,
+            "age": age,
+            "weight": Int(weight) ?? 0,
+            "birthday": birthdate
+        ]) { err in
+            if let err = err {
+                print("Error adding document: \(err)")
+            } else {
+                print("Document added with ID: \(ref!.documentID)")
+                
+                // Save the current user's ID to UserDefaults so we can send it to Flask server later
+                UserDefaults.standard.set(ref!.documentID, forKey: "currentUserID")
+                
+                // Add the empty subcollections
+                ref!.collection("ExerciseEntries").document().setData([:]) { err in
+                    if let err = err {
+                        print("Error adding ExerciseEntries subcollection: \(err)")
+                    } else {
+                        print("ExerciseEntries subcollection added for user \(ref!.documentID)")
+                    }
+                }
+
+                ref!.collection("Meals").document().setData([:]) { err in
+                    if let err = err {
+                        print("Error adding Meals subcollection: \(err)")
+                    } else {
+                        print("Meals subcollection added for user \(ref!.documentID)")
+                    }
+                }
+            }
+        }
         
         // Update the isNewUser state variable
         isNewUser = false
