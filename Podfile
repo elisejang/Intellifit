@@ -9,4 +9,3 @@ target 'Intellifit' do
   pod 'Firebase/Firestore'
 
 end
-
