@@ -13,12 +13,20 @@ struct FoodView: View {
 //    @State var carbP :Int
 //    @State var fatP :Int
     let mealPlans = [
+<<<<<<< Updated upstream
         MealPlan(meal: "meal 1", breakfast: "eggs", bProtein: "5", bCarb: "5", bFat: "5", lunch: "Caesar Salad", lProtein: "5", lCarb: "5", lFat: "5", dinner: "Salmon", dProtein: "5", dCarb: "5", dFat: "5"),
         MealPlan(meal: "meal 1", breakfast: "eggs", bProtein: "5", bCarb: "5", bFat: "5", lunch: "Caesar Salad", lProtein: "5", lCarb: "5", lFat: "5", dinner: "Salmon", dProtein: "5", dCarb: "5", dFat: "5"),
         MealPlan(meal: "meal 1", breakfast: "eggs", bProtein: "5", bCarb: "5", bFat: "5", lunch: "Caesar Salad", lProtein: "5", lCarb: "5", lFat: "5", dinner: "Salmon", dProtein: "5", dCarb: "5", dFat: "5"),
         MealPlan(meal: "meal 1", breakfast: "eggs", bProtein: "5", bCarb: "5", bFat: "5", lunch: "Caesar Salad", lProtein: "5", lCarb: "5", lFat: "5", dinner: "Salmon", dProtein: "5", dCarb: "5", dFat: "5"),
         MealPlan(meal: "meal 1", breakfast: "eggs", bProtein: "5", bCarb: "5", bFat: "5", lunch: "Caesar Salad", lProtein: "5", lCarb: "5", lFat: "5", dinner: "Salmon", dProtein: "5", dCarb: "5", dFat: "5"),
         MealPlan(meal: "meal 1", breakfast: "eggs", bProtein: "5", bCarb: "5", bFat: "5", lunch: "Caesar Salad", lProtein: "5", lCarb: "5", lFat: "5", dinner: "Salmon", dProtein: "5", dCarb: "5", dFat: "5")
+=======
+        MealPlan(meal: "Meal Plan 1", breakfast: "Eggs", lunch: "Ceasar Salad", dinner: "Salmon"),
+        MealPlan(meal: "Meal Plan 2", breakfast: "Eggs", lunch: "Ceasar Salad", dinner: "Salmon"),
+        MealPlan(meal: "Meal Plan 3", breakfast: "Eggs", lunch: "Ceasar Salad", dinner: "Salmon"),
+        MealPlan(meal: "Meal Plan 4", breakfast: "Eggs", lunch: "Ceasar Salad", dinner: "Salmon"),
+        MealPlan(meal: "Meal Plan 5", breakfast: "Eggs", lunch: "Ceasar Salad", dinner: "Salmon")
+>>>>>>> Stashed changes
     ]
     
     var body: some View {
@@ -49,6 +57,7 @@ struct DateView: View {
     var body: some View {
         VStack {
             HStack {
+                Spacer()
                 Button(action: {
                     currentDate = Calendar.current.date(byAdding: .day, value: -1, to: currentDate) ?? currentDate
                 }) {
@@ -57,8 +66,12 @@ struct DateView: View {
                 }
                 .padding()
                 
-                Text(dateFormatter.string(from: currentDate))
+                Spacer()
+                
+                Text(dateText(for: currentDate))
                     .font(.system(size: 25))
+                
+                Spacer()
 
                 Button(action: {
                     currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
@@ -67,6 +80,8 @@ struct DateView: View {
                         .font(.system(size: 25))
                 }
                 .padding()
+                
+                Spacer()
             }
         }
     }
@@ -167,10 +182,29 @@ struct MacroSection: View {
     
     var body: some View {
         VStack {
+<<<<<<< Updated upstream
             Text(title)
                 .font(.subheadline)
             Text(value)
                 .font(.headline)
+=======
+            Text(meal)
+                .font(.title2)
+                .foregroundColor(.blue)
+                .padding()
+            Text(breakfast)
+                .font(.body)
+                .foregroundColor(.gray)
+                .padding(5)
+            Text(lunch)
+                .font(.body)
+                .foregroundColor(.gray)
+                .padding(5)
+            Text(dinner)
+                .font(.body)
+                .foregroundColor(.gray)
+                .padding(5)
+>>>>>>> Stashed changes
         }
         .foregroundColor(.black)
     }
