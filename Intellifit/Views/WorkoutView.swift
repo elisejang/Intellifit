@@ -8,6 +8,7 @@
 //
 
 import SwiftUI
+//import Foundation
 
 struct WorkoutView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -15,206 +16,246 @@ struct WorkoutView: View {
     @State private var RecommendationsView = false
     @State private var PastActView = false
     @State var currentImages: [String] = ["rec1", "rec2", "rec3", "rec4", "rec5"]
-    
+    @StateObject private var fitnessManager = FitnessManager()
+    @State private var isLoading = false
+    @State private var recA: [String: String] = [:]
+
     var body: some View {
-        VStack{
-            HStack {
-                Spacer().frame(width: 11)
-                Text("My Workouts")
-                    .font(.system(size: 35, weight: .bold))
-                    .font(.custom("Inter", size: 25))
-                    .foregroundColor(Color.black)
-                Spacer()
-                Button(action: {
-                    CalendarPage = true
-                }){Image("calendarIcon")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 100, height: 150)
-                }
-                .fullScreenCover(isPresented: $CalendarPage, content: {
-                                    CalendarView()
-                                })
-            }
-//            .ignoresSafeArea()
-                
-            HStack{
-                Spacer().frame(width: 11)
-                Text("Recommendations")
-                    .font(.system(size: 25, weight: .bold))
-                    .font(.custom("Inter", size: 25))
-                    .foregroundColor(Color.black)
-                Spacer()
-                Button(action: {
-                    RecommendationsView = true
-                }){Text("View All")
-                        .font(.system(size: 12))
+        VStack {
+            if isLoading {
+                ProgressView()
+            } else {
+                HStack {
+                    Spacer().frame(width: 11)
+                    Text("My Workouts")
+                        .font(.system(size: 35, weight: .bold))
                         .font(.custom("Inter", size: 25))
-                        .foregroundColor(Color.gray)
-                }
-                .fullScreenCover(isPresented: $RecommendationsView, content: {
-                                    RecView()
-                                })
-            
-                Spacer().frame(width: 11)
-                
-            }
-            
-            //add how many hours
-            
-            ScrollView(.horizontal) {
-                LazyHStack(spacing: 10) {
-                    Spacer().frame(width: 1)
-                    ForEach(1..<6) { index in
-                        let imageName = "rec\(index)"
-                        ZStack {
-                        Image(imageName)
+                        .foregroundColor(Color.black)
+                    Spacer()
+                    Button(action: {
+                        CalendarPage = true
+                    }) {
+                        Image("calendarIcon")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 100, height: 150)
-                            .cornerRadius(10)
-                                    
-                        Text(imageName)
-                                .font(.body)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                                }
                     }
+                    .fullScreenCover(isPresented: $CalendarPage, content: {
+                        CalendarView()
+                    })
                 }
-            }
-            
-            HStack{
-                Spacer().frame(width: 11)
-                Text("Past Activities")
-                    .font(.system(size: 25, weight: .bold))
-                    .font(.custom("Inter", size: 25))
-                    .foregroundColor(Color.black)
-                Spacer()
-                Button(action: {
-                    PastActView = true
-                }){Text("View All")
-                        .font(.system(size: 12))
+                
+                HStack {
+                    Spacer().frame(width: 11)
+                    Text("Recommendations")
+                        .font(.system(size: 25, weight: .bold))
                         .font(.custom("Inter", size: 25))
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(Color.black)
+                    Spacer()
+                    Button(action: {
+                        RecommendationsView = true
+                    }) {
+                        Text("View All")
+                            .font(.system(size: 12))
+                            .font(.custom("Inter", size: 25))
+                            .foregroundColor(Color.gray)
+                    }
+                    .fullScreenCover(isPresented: $RecommendationsView, content: {
+                        RecView(recA: recA)
+                    })
+                    
+                    Spacer().frame(width: 11)
                 }
-                .fullScreenCover(isPresented: $PastActView, content: {
-                                    PastView()
-                                })
                 
-                
-                
-                Spacer().frame(width: 11)
-                
-            }
-            
-           
-            
-            ScrollView(.horizontal) {
-                        LazyHStack(spacing: 10) {
-                            Spacer().frame(width: 1)
-                            ForEach(0..<5) { index in //change number according to how many
-                                let imageName = currentImages[index]
+                ScrollView(.horizontal) {
+                    LazyHStack(spacing: 10) {
+                        Spacer().frame(width: 1)
+                        ForEach(recA.sorted(by: { $0.key < $1.key }), id: \.key) { activity, priority in
+//                            let imageName = activity
+//                            if let imageName = Image(activity) {
                                 ZStack {
-                                    
-                                    Image(imageName)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
+                                    Rectangle()
+                                        .fill(Color.gray)
+
                                         .frame(width: 100, height: 150)
                                         .cornerRadius(10)
-                                        
-                                    
-                                    Button(action: {
-                                        if currentImages[index] == "rec1" {
-                                            currentImages[index] = "rec2"
-                                        } else {
-                                            currentImages[index] = "rec1"
-                                        }
-                                    }) {
-                                        Text(imageName)
-                                            .font(.body)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(.white)
-                                    }
-                                    .contentShape(Rectangle()) // Ensure button recognizes taps
+                                        .overlay(
+                                            Text(activity)
+                                                .font(.body)
+//                                                .fontWeight(.bold)
+                                                .font(.custom("Inter", size: 25))
+                                                .foregroundColor(.white)
+                                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                                            .alignmentGuide(HorizontalAlignment.center) { dimensions in
+                                                                dimensions.width / 2
+                                                            }
+                                                            .alignmentGuide(VerticalAlignment.center) { dimensions in
+                                                                dimensions.height / 2
+                                                            }
+                                                .padding()
+                                        )
                                 }
+                            
+                        }
+
+                    }
+                }
+                
+                HStack {
+                    Spacer().frame(width: 11)
+                    Text("Past Activities")
+                        .font(.system(size: 25, weight: .bold))
+                        .font(.custom("Inter", size: 25))
+                        .foregroundColor(Color.black)
+                    Spacer()
+                    Button(action: {
+                        PastActView = true
+                    }) {
+                        Text("View All")
+                            .font(.system(size: 12))
+                            .font(.custom("Inter", size: 25))
+                            .foregroundColor(Color.gray)
+                    }
+                    .fullScreenCover(isPresented: $PastActView, content: {
+                        PastView()
+                    })
+                    
+                    Spacer().frame(width: 11)
+                }
+                
+                ScrollView(.horizontal) {
+                    LazyHStack(spacing: 10) {
+                        Spacer().frame(width: 1)
+                        ForEach(0..<5) { index in
+                            let imageName = currentImages[index]
+                            ZStack {
+                                Image(imageName)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 100, height: 150)
+                                    .cornerRadius(10)
+                                
+                                Button(action: {
+                                    if currentImages[index] == "rec1" {
+                                        currentImages[index] = "rec2"
+                                    } else {
+                                        currentImages[index] = "rec1"
+                                    }
+                                }) {
+                                    Text(imageName)
+                                        .font(.body)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
+                                }
+                                .contentShape(Rectangle()) // Ensure button recognizes taps
                             }
                         }
                     }
-                    .padding(.top)
-                   
+                }
+                .padding(.top)
+                
+            }
         }
-        
-    }
-}
-
-//struct RecView: View {
-//    @Environment(\.presentationMode) var presentationMode
-//    @State var isFlipped = false
-//    @State var backDegree = 0.0
-//    @State var frontDegree = -90.0
-//    let durationAndDelay : CGFloat = 0.3
-//    @State var counts = Array(repeating: 0, count: 6)
-//
-//    func flip () {
-//            isFlipped = !isFlipped
-//            if isFlipped {
-//                withAnimation(.linear(duration: durationAndDelay)) {
-//                    backDegree = 90
-//                }
-//                withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)){
-//                    frontDegree = 0
-//                }
-//            } else {
-//                withAnimation(.linear(duration: durationAndDelay)) {
-//                    frontDegree = -90
-//                }
-//                withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)){
-//                    backDegree = 0
-//                }
-//            }
-//        }
-//
-//    var body: some View {
-//        VStack {
-//            Button(action: {
-//                presentationMode.wrappedValue.dismiss()
-//            }) {
-//                Image("downarrow")
-//                    .resizable()
-//                    .frame(width: 40, height: 40)
-//
-//            }
-//            ScrollView(.vertical) {
-//                LazyVStack(spacing: 10) {
-//                    Spacer().frame(width: 1)
-//                    ForEach(1..<6) { index in
-//                        let imageName = "rec\(index)"
-//                        @State var count = 0
-//
-////                        let imageName = "tennis"
-//
-//                        ZStack {
-//                        //front of card
-//                            CardFront(w: 300, h: 150, imgName: imageName,degree: $frontDegree)
-//                            CardBack(w: 300, h: 150, imgName: imageName, size: true, degree: $backDegree)
-//
-//                        }.onTapGesture {
-//                            flip ()
-//                        }
+        .onAppear {
+            isLoading = true
+            recA = [
+                    "Cycling, 10-11.9 mph, light": "0.0",
+                    "Cycling, <10 mph, leisure bicycling": "0.0",
+                    "Cycling, >20 mph, racing": "0.0",
+                    "Cycling, mountain bike, bmx": "0.0",
+                    "Weight lifting, body building, vigorous": "1.0"
+                ]
+            isLoading = false
+//            fitnessManager.predictFitness(userId: "123", date: "2022-01-01") { result in
+//                switch result {
+//                case .success(let fitness):
+//                    DispatchQueue.main.async {
+//                        fitnessManager.fitness = fitness
+//                        recA = fitness.sorted(by: { $0.key < $1.key }).map { $0.key }
+//                        isLoading = false
+//                    }
+//                case .failure(let error):
+//                    DispatchQueue.main.async {
+//                        print("Error: \(error)")
+//                        isLoading = false
 //                    }
 //                }
 //            }
-//        }
-//    }
+        }
+    }
+}
+
+
+
+
+
+class FitnessManager: ObservableObject {
+    @Published var fitness: [String: String] = [:]
+
+    func predictFitness(userId: String, date: String, completion: @escaping (Result<[String: String], Error>) -> Void) {
+        // Define the endpoint URL for the predictFitness route
+        let baseURL = URL(string: "http://your-flask-server-url.com")!
+        let url = baseURL.appendingPathComponent("/predictFitness")
+
+        // Prepare the request body
+        let requestBody: [String: String] = [
+            "userId": userId,
+            "date": date
+        ]
+
+        // Create the request object
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        // Set the request body
+        request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody)
+
+        // Send the request
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            if let data = data {
+                // Parse and handle the response data
+                do {
+                    let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String]
+                    if let fitness = responseJSON {
+                        completion(.success(fitness))
+                    } else {
+                        completion(.failure(NetworkError.invalidResponse))
+                    }
+                } catch {
+                    completion(.failure(error))
+                }
+            } else {
+                completion(.failure(NetworkError.invalidResponse))
+            }
+        }.resume()
+    }
+}
+
+//enum NetworkError: Error {
+//    case invalidResponse
 //}
+
+
 struct RecView: View {
+    var recA: [String: String]
+
+    init(recA: [String: String]) {
+        self.recA = recA
+    }
+
     @Environment(\.presentationMode) var presentationMode
     @State var isFlipped = Array(repeating: false, count: 6)
     @State var backDegree = Array(repeating: 0.0, count: 6)
     @State var frontDegree = Array(repeating: -90.0, count: 6)
     let durationAndDelay: CGFloat = 0.3
     @State var counts = Array(repeating: 0, count: 6)
-    
+
     func flip(index: Int) {
         isFlipped[index] = !isFlipped[index]
         if isFlipped[index] {
@@ -233,7 +274,7 @@ struct RecView: View {
             }
         }
     }
-    
+
     var body: some View {
         VStack {
             Button(action: {
@@ -243,15 +284,17 @@ struct RecView: View {
                     .resizable()
                     .frame(width: 40, height: 40)
             }
-            ScrollView(.vertical) {
+            ScrollView {
                 LazyVStack(spacing: 10) {
                     Spacer().frame(width: 1)
-                    ForEach(0..<5) { index in
-                        let imageName = "rec\(index + 1)"
+                    ForEach(Array(recA.sorted(by: { $0.key < $1.key }).enumerated()), id: \.element.key) { index, item in
+                        let activity = item.key
                         
                         ZStack {
-                            CardFront(w: 300, h: 150, imgName: imageName, degree: $frontDegree[index], index: index) {flip(index: index)}
-                            CardBack(w: 300, h: 150, imgName: imageName, size: true, degree: $backDegree[index], count: $counts[index])
+                            CardFront(w: 300, h: 150, imgName: activity, degree: $frontDegree[index], index: index) {
+                                flip(index: index)
+                            }
+                            CardBack(w: 300, h: 150, imgName: activity, size: true, degree: $backDegree[index], count: $counts[index])
                         }
                         .onTapGesture {
                             flip(index: index)
@@ -262,6 +305,7 @@ struct RecView: View {
         }
     }
 }
+
 
 
 struct CardFront: View {
@@ -287,9 +331,12 @@ struct CardFront: View {
                         .cornerRadius(10)
                 }
                 Text(imgName)
-                    .font(.title)
-                    .fontWeight(.bold)
+                    .font(.body)
+                    .font(.custom("Inter", size: 25))
                     .foregroundColor(.white)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .alignmentGuide(HorizontalAlignment.center) { dimensions in dimensions.width / 2}
+                    .alignmentGuide(VerticalAlignment.center) { dimensions in dimensions.height / 2}
             }
         }
         .rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
