@@ -9,47 +9,28 @@ import SwiftUI
 
 struct FoodView: View {
     // change to be loaded from ML model
+//    @State var proteinP :Int
+//    @State var carbP :Int
+//    @State var fatP :Int
     let mealPlans = [
-        MealPlan(meal: "Meal 1", breakfast: "Eggs", lunch: "Ceasar Salad", dinner: "Salmon"),
-        MealPlan(meal: "Meal 2", breakfast: "Eggs", lunch: "Ceasar Salad", dinner: "Salmon"),
-        MealPlan(meal: "Meal 3", breakfast: "Eggs", lunch: "Ceasar Salad", dinner: "Salmon"),
-        MealPlan(meal: "Meal 4", breakfast: "Eggs", lunch: "Ceasar Salad", dinner: "Salmon"),
-        MealPlan(meal: "Meal 5", breakfast: "Eggs", lunch: "Ceasar Salad", dinner: "Salmon")
+        MealPlan(meal: "meal 1", breakfast: "eggs", bProtein: "5", bCarb: "5", bFat: "5", lunch: "Caesar Salad", lProtein: "5", lCarb: "5", lFat: "5", dinner: "Salmon", dProtein: "5", dCarb: "5", dFat: "5"),
+        MealPlan(meal: "meal 1", breakfast: "eggs", bProtein: "5", bCarb: "5", bFat: "5", lunch: "Caesar Salad", lProtein: "5", lCarb: "5", lFat: "5", dinner: "Salmon", dProtein: "5", dCarb: "5", dFat: "5"),
+        MealPlan(meal: "meal 1", breakfast: "eggs", bProtein: "5", bCarb: "5", bFat: "5", lunch: "Caesar Salad", lProtein: "5", lCarb: "5", lFat: "5", dinner: "Salmon", dProtein: "5", dCarb: "5", dFat: "5"),
+        MealPlan(meal: "meal 1", breakfast: "eggs", bProtein: "5", bCarb: "5", bFat: "5", lunch: "Caesar Salad", lProtein: "5", lCarb: "5", lFat: "5", dinner: "Salmon", dProtein: "5", dCarb: "5", dFat: "5"),
+        MealPlan(meal: "meal 1", breakfast: "eggs", bProtein: "5", bCarb: "5", bFat: "5", lunch: "Caesar Salad", lProtein: "5", lCarb: "5", lFat: "5", dinner: "Salmon", dProtein: "5", dCarb: "5", dFat: "5"),
+        MealPlan(meal: "meal 1", breakfast: "eggs", bProtein: "5", bCarb: "5", bFat: "5", lunch: "Caesar Salad", lProtein: "5", lCarb: "5", lFat: "5", dinner: "Salmon", dProtein: "5", dCarb: "5", dFat: "5")
     ]
     
     var body: some View {
         ScrollView{
             VStack {
                 DateView()
-                
-                Text("Macro Goals")
-                    .font(.system(size: 25))
-                    .bold()
-                HStack{
-                    VStack{
-                        ProgressCircleView(progress: 0.75)
-                        Text("Protein")
-                    }
-                    VStack{
-                        ProgressCircleView(progress: 0.5)
-                        Text("Carbs")
-                    }
-                    VStack{
-                        ProgressCircleView(progress: 0.25)
-                        Text("Fat")
-                    }
-                }
-                .padding()
-                
                 Text("Suggested Meals")
                     .font(.system(size: 25))
                     .bold()
                 VStack {
                     ForEach(mealPlans, id: \.meal) { plan in
-                        MealCardView(meal: plan.meal,
-                            breakfast: plan.breakfast,
-                            lunch: plan.lunch,
-                            dinner: plan.dinner)
+                        MealCardView(meal: plan.meal, breakfast: plan.breakfast, bProtein: plan.bProtein, bCarb: plan.bCarb, bFat: plan.bFat, lunch: plan.lunch, lProtein: plan.lProtein, lCarb: plan.lCarb, lFat: plan.lFat, dinner: plan.dinner, dProtein: plan.dProtein, dCarb: plan.dCarb, dFat: plan.dFat)
                     }
                 }
             }
@@ -108,67 +89,90 @@ struct DateView: View {
    }
 }
 
-struct ProgressCircleView: View {
-    let progress: Double
-    
-    var body: some View {
-        ZStack {
-            Circle()
-                .stroke(lineWidth: 10)
-                .opacity(0.3)
-                .foregroundColor(.gray)
-                
-            
-            Circle()
-                .trim(from: 0, to: CGFloat(progress))
-                .stroke(style: StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round))
-                .foregroundColor(.blue)
-                .rotationEffect(.degrees(-90))
-                .animation(.easeInOut(duration: 1.5), value: progress)
-            
-            Text("\(Int(progress * 100))%")
-                .font(.caption)
-        }
-        .padding()
-    }
-}
+
+
 
 struct MealCardView: View {
     let meal: String
-//    let description: String
     let breakfast: String
+    let bProtein: String
+    let bCarb: String
+    let bFat: String
+    
     let lunch: String
+    let lProtein: String
+    let lCarb: String
+    let lFat: String
+    
     let dinner: String
+    let dProtein: String
+    let dCarb: String
+    let dFat: String
+    
+    
+    @State private var combinedMeals: String = "" //this is what we call from backend
+    
+    func combineMeals(breakfast: String, lunch: String, dinner: String) -> String {
+            let combinedMeals = "\(breakfast), \(lunch), \(dinner)"
+            return combinedMeals
+        }
+    
+    var body: some View {
+        Button(action: {
+            combinedMeals = combineMeals(breakfast: breakfast, lunch: lunch, dinner: dinner)
+            
+//            print(combinedMeals)
+        }){
+            VStack {
+                Text(breakfast)
+                    .font(.headline)
+                    .padding(.bottom, 10)
+                
+                HStack(spacing: 20) {
+                    MacroSection(title: "Fats", value: bFat)
+                    MacroSection(title: "Carbs", value: bCarb)
+                    MacroSection(title: "Protein", value: bProtein)
+                }
+                Text(lunch)
+                    .font(.headline)
+                    .padding(.bottom, 10)
+                
+                HStack(spacing: 20) {
+                    MacroSection(title: "Fats", value: lFat)
+                    MacroSection(title: "Carbs", value: lCarb)
+                    MacroSection(title: "Protein", value: lProtein)
+                }
+                Text(dinner)
+                    .font(.headline)
+                    .padding(.bottom, 10)
+                
+                HStack(spacing: 20) {
+                    MacroSection(title: "Fats", value: dFat)
+                    MacroSection(title: "Carbs", value: dCarb)
+                    MacroSection(title: "Protein", value: dProtein)
+                }
+            }
+        }
+        .foregroundColor(Color.white)
+        .padding()
+        .background(Color.blue)
+        .cornerRadius(10)
+        
+        }
+}
+
+struct MacroSection: View {
+    let title: String
+    let value: String
     
     var body: some View {
         VStack {
-            Text(meal)
-                .font(.title2)
-                .foregroundColor(.blue)
-                .padding()
-            
-//            Text(description)
-//                .font(.body)
-//                .foregroundColor(.gray)
-//                .padding()
-            Text(breakfast)
-                .font(.body)
-                .foregroundColor(.gray)
-                .padding(5)
-            Text(lunch)
-                .font(.body)
-                .foregroundColor(.gray)
-                .padding(5)
-            Text(dinner)
-                .font(.body)
-                .foregroundColor(.gray)
-                .padding(5)
+            Text(title)
+                .font(.subheadline)
+            Text(value)
+                .font(.headline)
         }
-        .frame(width:300)
-        .background(Color.white)
-        .cornerRadius(10)
-        .shadow(radius: 4)
-        .padding()
+        .foregroundColor(.black)
     }
 }
 
@@ -176,8 +180,20 @@ struct MealPlan {
     let meal: String
 //    let description: String
     let breakfast: String
+    let bProtein: String
+    let bCarb: String
+    let bFat: String
+    
     let lunch: String
+    let lProtein: String
+    let lCarb: String
+    let lFat: String
+    
     let dinner: String
+    let dProtein: String
+    let dCarb: String
+    let dFat: String
+    
 }
 
 
