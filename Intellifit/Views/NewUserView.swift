@@ -48,6 +48,9 @@ struct NewUserPopUp : View {
     @State var lastName: String = ""
     @State var birthdate = Date()
     @State var weight: Int = 0
+    @State var goal: String?
+    
+    var dropdownOptions = ["Option 1", "Option 2", "Option 3"]
     
     var body: some View {
         VStack {
@@ -248,12 +251,14 @@ struct NewUserPopUp : View {
 }
     
 struct UserInfoView: View {
-    
     @Binding var firstName: String
     @Binding var lastName: String
     @Binding var birthdate: Date
     @Binding var weight: Int
     var nextButtonTapped: () -> Void
+    
+//    @State private var goal: String?
+//    private let dropdownOptions = ["Gain Weight", "Loss Weight"]
     
     var body: some View {
         VStack{
@@ -311,6 +316,15 @@ struct UserInfoView: View {
             
         }.padding()
         
+        HStack {
+            Text("Fitness Goal:")
+                .font(.system(size: 16.0, weight: .semibold))
+                .foregroundColor(Color("Color 4"))
+            
+            DropdownView()
+        }
+        .padding(10)
+        
         
         Button(action: nextButtonTapped) {
             Image(systemName: "arrow.forward")
@@ -325,14 +339,34 @@ struct UserInfoView: View {
     }
 }
 
+struct DropdownView: View {
+//    @Binding var goal: String?
+//    let options: [String]
+    @State private var selection = "Goal"
+    let dropdownOptions = ["Gain Weight", "Loss Weight"]
+    
+    @State private var isExpanded = false
+    
+    var body: some View {
+        VStack {
+        Picker("Select a paint color", selection: $selection) {
+                ForEach(dropdownOptions, id: \.self) {
+                    Text($0)
+                }
+            }
+            .pickerStyle(.menu)
+        }
+    }
+}
+
 struct ActivityHistoryView: View {
     struct UserData: Codable {
         var activities: [String] = []
     }
-    
+
     var nextButtonTapped: () -> Void
     var history: [UserData] = []
-    
+
     var body: some View{
 //        ScrollView{
             CalendarView().padding()
