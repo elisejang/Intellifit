@@ -60,12 +60,62 @@ struct NewUserPopUp : View {
         }
     }
     
+    // This function is responsible for creating a new user in our database and setting the values input in the 'New User' page equal to the fields of a User. It also creates ExerciseEntries and Meals subcollection with 1 empty document inside each.
+//    func beginButtonTapped() {
+//        let fullName = "\(firstName) \(lastName)"
+//        let db = Firestore.firestore()  // <-- Create a reference to Firestore
+//
+//        // Compute the user's age based on their birthdate
+//        let now = Date()
+//        let ageComponents = Calendar.current.dateComponents([.year], from: birthdate, to: now)
+//        let age = ageComponents.year!
+//
+//        // Create a new document in the "Users" collection
+//        var ref: DocumentReference? = nil
+//        ref = db.collection("Users").addDocument(data: [
+//            "first_name": firstName,
+//            "last_name": lastName,
+//            "age": age,
+//            "weight": Double(weight) ?? 0,
+//            "birthday": birthdate
+//        ]) { err in
+//            if let err = err {
+//                print("Error adding document: \(err)")
+//            } else {
+//                print("Document added with ID: \(ref!.documentID)")
+//
+//                // Save the current user's ID to UserDefaults so we can send it to Flask server later
+//                UserDefaults.standard.set(ref!.documentID, forKey: "currentUserID")
+//
+//                // Add the empty subcollections
+//                ref!.collection("ExerciseEntries").document().setData([:]) { err in
+//                    if let err = err {
+//                        print("Error adding ExerciseEntries subcollection: \(err)")
+//                    } else {
+//                        print("ExerciseEntries subcollection added for user \(ref!.documentID)")
+//                    }
+//                }
+//
+//                ref!.collection("Meals").document().setData([:]) { err in
+//                    if let err = err {
+//                        print("Error adding Meals subcollection: \(err)")
+//                    } else {
+//                        print("Meals subcollection added for user \(ref!.documentID)")
+//                    }
+//                }
+//            }
+//        }
+//
+//        // Update the isNewUser state variable
+//        isNewUser = false
+//        isShowingHomeView = true
+//
+//        // Dismiss the pop-up view
+//        presentationMode.wrappedValue.dismiss()
+//    }
     func beginButtonTapped() {
         let db = Firestore.firestore()
-//        {
-//            print("Error creating a reference to Firestore")
-//            return
-//        }
+
         
         let fullName = "\(firstName) \(lastName)"
         
@@ -73,7 +123,30 @@ struct NewUserPopUp : View {
         let now = Date()
         let ageComponents = Calendar.current.dateComponents([.year], from: birthdate, to: now)
         let age = ageComponents.year!
-        let weightValue = weight
+        //let weightValue = weight
+        
+//         Convert the weight to a Double, handling empty or non-numeric values
+//        let weightValue: Double? = {
+//            if let weightDouble = Double(weight) {
+//                return weightDouble
+//            } else if let weightInt = Int(weight) {
+//                return Double(weightInt)
+//            } else {
+//                print("Invalid weight value: \(weight)")
+//                return nil
+//            }
+//        }()
+        let weightValue: Double? = Double(weight)
+
+        if weightValue == nil {
+            print("Invalid weight value: \(weight)")
+        }
+        
+        // Check if weightValue is nil (indicating an invalid weight)
+        guard let weight = weightValue else {
+            // Handle the error condition (e.g., display an error message to the user)
+            return
+        }
         
         // Create a new document in the "Users" collection
         var ref: DocumentReference? = nil
@@ -81,14 +154,14 @@ struct NewUserPopUp : View {
             "first_name": firstName,
             "last_name": lastName,
             "age": age,
-            "weight": weightValue,
+            "weight": weight,
             "birthday": birthdate
         ]) { err in
             if let err = err {
                 print("Error adding document: \(err)")
             } else {
                 if let documentID = ref?.documentID {
-                    print("Document added with ID: \(documentID)")
+                    print("User added with ID: \(documentID)")
                     
                     // Save the current user's ID to UserDefaults so we can send it to the Flask server later
                     UserDefaults.standard.set(documentID, forKey: "currentUserID")
@@ -129,6 +202,8 @@ struct NewUserPopUp : View {
             }
         }
 //        predictActivity(userId: <#T##String#>, date: <#T##String#>, completion: (Result<[String : Any], any Error>) -> Void)
+        
+        UserWeight.weight = weight
         
         // Update the isNewUser state variable
         isNewUser = false
@@ -349,10 +424,15 @@ struct ActivityHistoryView: View {
             .padding(80)
     //        }
     }
+
 }
 
 struct NewUserView_Previews: PreviewProvider {
     static var previews: some View {
         NewUserView(isNewUser: .constant(true), isShowingHomeView: .constant(false))
     }
+}
+
+struct UserWeight {
+    static var weight: Double = 0.0
 }
