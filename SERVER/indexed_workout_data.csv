@@ -1,0 +1,31 @@
+Day of the Week,Weather,Exercise Previous Day,Exercise One Week Before,Exercise Two Weeks Before,Exercise Three Weeks Before,Calories Burned,Exercise Set
+Saturday,Spring,,,,,774.0,"[241, 35]"
+Sunday,Spring,774.0,,,,760.0,"[56, 146, 142]"
+Monday,Spring,760.0,,,,246.0,[229]
+Tuesday,Spring,246.0,,,,1302.0,"[167, 118, 97]"
+Wednesday,Spring,1302.0,,,,668.0,"[158, 185]"
+Thursday,Spring,668.0,,,,703.0,"[1, 128]"
+Friday,Spring,703.0,,,,703.0,"[155, 165, 176]"
+Saturday,Spring,703.0,774.0,,,774.0,"[78, 64]"
+Sunday,Spring,774.0,760.0,,,880.0,[12]
+Monday,Spring,880.0,246.0,,,598.0,"[193, 14]"
+Tuesday,Spring,598.0,1302.0,,,281.0,[85]
+Wednesday,Spring,281.0,668.0,,,281.0,[131]
+Thursday,Spring,281.0,703.0,,,422.0,[139]
+Friday,Spring,422.0,703.0,,,563.0,[75]
+Saturday,Spring,563.0,774.0,774.0,,1056.0,"[218, 69, 181]"
+Sunday,Spring,1056.0,880.0,760.0,,633.0,[38]
+Monday,Spring,633.0,598.0,246.0,,1970.0,"[197, 19, 215]"
+Tuesday,Spring,1970.0,281.0,1302.0,,1091.0,"[205, 209]"
+Wednesday,Spring,1091.0,281.0,668.0,,1337.0,"[110, 40]"
+Thursday,Spring,1337.0,422.0,703.0,,457.0,[61]
+Friday,Spring,457.0,563.0,703.0,,232.0,[169]
+Saturday,Spring,232.0,1056.0,774.0,774.0,317.0,[80]
+Sunday,Spring,317.0,633.0,880.0,760.0,598.0,"[3, 95]"
+Monday,Spring,598.0,1970.0,598.0,246.0,1900.0,"[47, 230, 92]"
+Tuesday,Spring,1900.0,1091.0,281.0,1302.0,211.0,[82]
+Wednesday,Spring,211.0,1337.0,281.0,668.0,422.0,[144]
+Thursday,Spring,422.0,457.0,422.0,703.0,1182.0,"[0, 182, 83]"
+Friday,Spring,1182.0,232.0,563.0,703.0,704.0,[197]
+Saturday,Spring,704.0,317.0,1056.0,774.0,915.0,"[128, 196]"
+Sunday,Spring,915.0,598.0,633.0,880.0,774.0,"[145, 119]"
