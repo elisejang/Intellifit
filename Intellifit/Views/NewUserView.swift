@@ -16,7 +16,7 @@ struct NewUserView: View {
     var body: some View {
         ZStack{
             VStack{
-                Text("Need to make this better!")
+                Text("Time to become IntelliFit!")
                 Button("New User") {
                     isShowingNewUserPopUp = true
                 }
@@ -63,58 +63,6 @@ struct NewUserPopUp : View {
     }
     
     // This function is responsible for creating a new user in our database and setting the values input in the 'New User' page equal to the fields of a User. It also creates ExerciseEntries and Meals subcollection with 1 empty document inside each.
-//    func beginButtonTapped() {
-//        let fullName = "\(firstName) \(lastName)"
-//        let db = Firestore.firestore()  // <-- Create a reference to Firestore
-//
-//        // Compute the user's age based on their birthdate
-//        let now = Date()
-//        let ageComponents = Calendar.current.dateComponents([.year], from: birthdate, to: now)
-//        let age = ageComponents.year!
-//
-//        // Create a new document in the "Users" collection
-//        var ref: DocumentReference? = nil
-//        ref = db.collection("Users").addDocument(data: [
-//            "first_name": firstName,
-//            "last_name": lastName,
-//            "age": age,
-//            "weight": Double(weight) ?? 0,
-//            "birthday": birthdate
-//        ]) { err in
-//            if let err = err {
-//                print("Error adding document: \(err)")
-//            } else {
-//                print("Document added with ID: \(ref!.documentID)")
-//
-//                // Save the current user's ID to UserDefaults so we can send it to Flask server later
-//                UserDefaults.standard.set(ref!.documentID, forKey: "currentUserID")
-//
-//                // Add the empty subcollections
-//                ref!.collection("ExerciseEntries").document().setData([:]) { err in
-//                    if let err = err {
-//                        print("Error adding ExerciseEntries subcollection: \(err)")
-//                    } else {
-//                        print("ExerciseEntries subcollection added for user \(ref!.documentID)")
-//                    }
-//                }
-//
-//                ref!.collection("Meals").document().setData([:]) { err in
-//                    if let err = err {
-//                        print("Error adding Meals subcollection: \(err)")
-//                    } else {
-//                        print("Meals subcollection added for user \(ref!.documentID)")
-//                    }
-//                }
-//            }
-//        }
-//
-//        // Update the isNewUser state variable
-//        isNewUser = false
-//        isShowingHomeView = true
-//
-//        // Dismiss the pop-up view
-//        presentationMode.wrappedValue.dismiss()
-//    }
     func beginButtonTapped() {
         let db = Firestore.firestore()
 
@@ -125,19 +73,7 @@ struct NewUserPopUp : View {
         let now = Date()
         let ageComponents = Calendar.current.dateComponents([.year], from: birthdate, to: now)
         let age = ageComponents.year!
-        //let weightValue = weight
-        
-//         Convert the weight to a Double, handling empty or non-numeric values
-//        let weightValue: Double? = {
-//            if let weightDouble = Double(weight) {
-//                return weightDouble
-//            } else if let weightInt = Int(weight) {
-//                return Double(weightInt)
-//            } else {
-//                print("Invalid weight value: \(weight)")
-//                return nil
-//            }
-//        }()
+
         let weightValue: Double? = Double(weight)
 
         if weightValue == nil {
@@ -182,6 +118,14 @@ struct NewUserPopUp : View {
                             print("Error adding Meals subcollection: \(err)")
                         } else {
                             print("Meals subcollection added for user \(documentID)")
+                        }
+                    }
+                    
+                    ref?.collection("Predictions").document().setData([:]) { err in
+                        if let err = err {
+                            print("Error adding Predictions subcollection: \(err)")
+                        } else {
+                            print("Predictions subcollection added for user \(documentID)")
                         }
                     }
                     
@@ -445,7 +389,7 @@ struct ActivityHistoryView: View {
 //        ScrollView{
 //            CalendarView().padding()
 //            Text("[User name]'s Month of Activities").padding(.bottom, 30).bold()
-        Text(" Tap 'Begin' when complete!").padding()
+//        Text("For each day above, click and input workout activities you have done or want to do on that day. Tap 'Begin' when complete!").padding()
             Button(action: nextButtonTapped) {
                 Text("Begin")
                     .font(.system(size: 15.0, weight: .bold))

@@ -13,6 +13,8 @@ import Combine
 import FirebaseFirestore
 
 
+var trained: Bool = false
+
 // will use this to record the first selectedExercise for now (still need 2nd and 3rd)
 class UserData: ObservableObject {
     @Published var selectedExercise: Exercise?
@@ -39,7 +41,10 @@ class ExerciseViewModel: ObservableObject {
             }
         }
     }
+    
+    
 }
+
 
 
 //struct WorkoutView: View {
@@ -51,6 +56,7 @@ class ExerciseViewModel: ObservableObject {
 //    @StateObject private var fitnessManager = FitnessManager()
 //    @State private var isLoading = false
 //    @State private var recA: [String: String] = [:]
+//
 //
 //    var body: some View {
 //        VStack {
@@ -103,13 +109,11 @@ class ExerciseViewModel: ObservableObject {
 //                    LazyHStack(spacing: 10) {
 //                        Spacer().frame(width: 1)
 //                        ForEach(recA.sorted(by: { $0.key < $1.key }), id: \.key) { activity, priority in
-////                            let imageName = activity
-////                            if let imageName = Image(activity) {
 //                                ZStack {
 //                                    Rectangle()
 //                                        .fill(Color.gray)
 //
-//                                        .frame(width: 100, height: 150)
+//                                        .frame(width: 200, height: 250)
 //                                        .cornerRadius(10)
 //                                        .overlay(
 //                                            Text(activity)
@@ -132,253 +136,73 @@ class ExerciseViewModel: ObservableObject {
 //
 //                    }
 //                }
-//
-//                HStack {
-//                    Spacer().frame(width: 11)
-//                    Text("Past Activities")
-//                        .font(.system(size: 25, weight: .bold))
-//                        .font(.custom("Inter", size: 25))
-//                        .foregroundColor(Color.black)
-//                    Spacer()
-//                    Button(action: {
-//                        PastActView = true
-//                    }) {
-//                        Text("View All")
-//                            .font(.system(size: 12))
-//                            .font(.custom("Inter", size: 25))
-//                            .foregroundColor(Color.gray)
-//                    }
-//                    .fullScreenCover(isPresented: $PastActView, content: {
-//                        PastView()
-//                    })
-//
-//                    Spacer().frame(width: 11)
-//                }
-//
-//                ScrollView(.horizontal) {
-//                    LazyHStack(spacing: 10) {
-//                        Spacer().frame(width: 1)
-//                        ForEach(0..<5) { index in
-//                            let imageName = currentImages[index]
-//                            ZStack {
-//                                Image(imageName)
-//                                    .resizable()
-//                                    .aspectRatio(contentMode: .fill)
-//                                    .frame(width: 100, height: 150)
-//                                    .cornerRadius(10)
-//
-//                                Button(action: {
-//                                    if currentImages[index] == "rec1" {
-//                                        currentImages[index] = "rec2"
-//                                    } else {
-//                                        currentImages[index] = "rec1"
-//                                    }
-//                                }) {
-//                                    Text(imageName)
-//                                        .font(.body)
-//                                        .fontWeight(.bold)
-//                                        .foregroundColor(.white)
-//                                }
-//                                .contentShape(Rectangle()) // Ensure button recognizes taps
-//                            }
-//                        }
-//                    }
-//                }
 //                .padding(.top)
 //
 //            }
 //        }
 //        .onAppear {
 //            isLoading = true
-//            recA = [
-//                    "Cycling, 10-11.9 mph, light": "0.0",
-//                    "Cycling, <10 mph, leisure bicycling": "0.0",
-//                    "Cycling, >20 mph, racing": "0.0",
-//                    "Cycling, mountain bike, bmx": "0.0",
-//                    "Weight lifting, body building, vigorous": "1.0"
-//                ]
-//            isLoading = false
-////            fitnessManager.predictFitness(userId: "123", date: "2022-01-01") { result in
-////                switch result {
-////                case .success(let fitness):
-////                    DispatchQueue.main.async {
-////                        fitnessManager.fitness = fitness
-////                        recA = fitness.sorted(by: { $0.key < $1.key }).map { $0.key }
-////                        isLoading = false
-////                    }
-////                case .failure(let error):
-////                    DispatchQueue.main.async {
-////                        print("Error: \(error)")
-////                        isLoading = false
-////                    }
-////                }
-////            }
-//        }
-//
-//    }
-//}
-//
-//
-//
-//
-//
-//class FitnessManager: ObservableObject {
-//    @Published var fitness: [String: String] = [:]
-//
-//    func predictFitness(userId: String, date: String, completion: @escaping (Result<[String: String], Error>) -> Void) {
-//        // Define the endpoint URL for the predictFitness route
-//        let baseURL = URL(string: "http://your-flask-server-url.com")!
-//        let url = baseURL.appendingPathComponent("/predictFitness")
-//
-//        // Prepare the request body
-//        let requestBody: [String: String] = [
-//            "userId": userId,
-//            "date": date
-//        ]
-//
-//        // Create the request object
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "POST"
-//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//
-//        // Set the request body
-//        request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody)
-//
-//        // Send the request
-//        URLSession.shared.dataTask(with: request) { (data, response, error) in
-//            if let error = error {
-//                completion(.failure(error))
-//                return
-//            }
-//
-//            if let data = data {
-//                // Parse and handle the response data
-//                do {
-//                    let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String]
-//                    if let fitness = responseJSON {
-//                        completion(.success(fitness))
-//                    } else {
-//                        completion(.failure(NetworkError.invalidResponse))
-//                    }
-//                } catch {
-//                    completion(.failure(error))
-//                }
-//            } else {
-//                completion(.failure(NetworkError.invalidResponse))
-//            }
-//        }.resume()
-//    }
-//}
-//
-////enum NetworkError: Error {
-////    case invalidResponse
-////}
-//
-//
-//struct RecView: View {
-//    var recA: [String: String]
-//
-//    init(recA: [String: String]) {
-//        self.recA = recA
-//    }
-//
-//    @Environment(\.presentationMode) var presentationMode
-//    @State var isFlipped = Array(repeating: false, count: 6)
-//    @State var backDegree = Array(repeating: 0.0, count: 6)
-//    @State var frontDegree = Array(repeating: -90.0, count: 6)
-//    let durationAndDelay: CGFloat = 0.3
-//    @State var counts = Array(repeating: 0, count: 6)
-//
-//    func flip(index: Int) {
-//        isFlipped[index] = !isFlipped[index]
-//        if isFlipped[index] {
-//            withAnimation(.linear(duration: durationAndDelay)) {
-//                backDegree[index] = 90
-//            }
-//            withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)) {
-//                frontDegree[index] = 0
-//            }
-//        } else {
-//            withAnimation(.linear(duration: durationAndDelay)) {
-//                frontDegree[index] = -90
-//            }
-//            withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)) {
-//                backDegree[index] = 0
-//            }
-//        }
-//    }
-//
-//    var body: some View {
-//        VStack {
-//            Button(action: {
-//                presentationMode.wrappedValue.dismiss()
-//            }) {
-//                Image("downarrow")
-//                    .resizable()
-//                    .frame(width: 40, height: 40)
-//            }
-//            ScrollView {
-//                LazyVStack(spacing: 10) {
-//                    Spacer().frame(width: 1)
-//                    ForEach(Array(recA.sorted(by: { $0.key < $1.key }).enumerated()), id: \.element.key) { index, item in
-//                        let activity = item.key
-//
-//                        ZStack {
-//                            CardFront(w: 300, h: 150, imgName: activity, degree: $frontDegree[index], index: index) {
-//                                flip(index: index)
+//            if ( trained ){
+//                fitnessManager.predictFitness(userId: "123", date: "2022-01-01") { result in
+//                                switch result {
+//                                case .success(let fitness):
+//                                    DispatchQueue.main.async {
+//                                        fitnessManager.fitness = fitness
+//                                        recA = fitness.sorted(by: { $0.key < $1.key }).map { $0.key }
+//                                        isLoading = false
+//                                    }
+//                                case .failure(let error):
+//                                    DispatchQueue.main.async {
+//                                        print("Error: (error)")
+//                                        isLoading = false
+//                                    }
+//                                }
 //                            }
-//                            CardBack(w: 300, h: 150, imgName: activity, size: true, degree: $backDegree[index], count: $counts[index])
-//                        }
-//                        .onTapGesture {
-//                            flip(index: index)
-//                        }
-//                    }
-//                }
 //            }
+//            else{
+//
+//                recA = [
+//                        "Cycling, 10-11.9 mph, light": "0.0",
+//                        "Cycling, <10 mph, leisure bicycling": "0.0",
+//                        "Cycling, >20 mph, racing": "0.0",
+//                        "Cycling, mountain bike, bmx": "0.0",
+//                        "Weight lifting, body building, vigorous": "1.0"
+//                    ]
+//                isLoading = false
+//            }
+////            isLoading = true
+////            recA = [
+////                    "Cycling, 10-11.9 mph, light": "0.0",
+////                    "Cycling, <10 mph, leisure bicycling": "0.0",
+////                    "Cycling, >20 mph, racing": "0.0",
+////                    "Cycling, mountain bike, bmx": "0.0",
+////                    "Weight lifting, body building, vigorous": "1.0"
+////                ]
+////            isLoading = false
+//
+//            //fitnessManager.predictFitness(userId: "123", date: "2022-01-01") { result in
+//            //                switch result {
+//            //                case .success(let fitness):
+//            //                    DispatchQueue.main.async {
+//            //                        fitnessManager.fitness = fitness
+//            //                        recA = fitness.sorted(by: { $0.key < $1.key }).map { $0.key }
+//            //                        isLoading = false
+//            //                    }
+//            //                case .failure(let error):
+//            //                    DispatchQueue.main.async {
+//            //                        print("Error: (error)")
+//            //                        isLoading = false
+//            //                    }
+//            //                }
+//            //            }
+//
+//            //if this doesn't return anything, then we leave it as the sample data above
+//
 //        }
 //    }
 //}
-//
-//
-//
-//struct CardFront: View {
-//    let w: CGFloat
-//    let h: CGFloat
-//    var imgName: String
-//    @Binding var degree: Double
-//    var index: Int
-//    var flipAction: () -> Void
-//
-//    var body: some View {
-//        ZStack {
-//            Rectangle()
-//                .fill(Color.gray)
-//                .frame(width: w, height: h)
-//                .cornerRadius(10)
-//            if degree >= 0 {
-//                if let image = UIImage(named: imgName) {
-//                    Image(uiImage: image)
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fill)
-//                        .frame(width: w, height: h)
-//                        .cornerRadius(10)
-//                }
-//                Text(imgName)
-//                    .font(.body)
-//                    .font(.custom("Inter", size: 25))
-//                    .foregroundColor(.white)
-//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                    .alignmentGuide(HorizontalAlignment.center) { dimensions in dimensions.width / 2}
-//                    .alignmentGuide(VerticalAlignment.center) { dimensions in dimensions.height / 2}
-//            }
-//        }
-//        .rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
-//        .onTapGesture {
-//            flipAction() // Call the flip action closure
-//        }
-//        .id(index) // Add an identifier to ensure proper view update
-//    }
-//}
+public var recA: [(key: String, value: String)] = []
+
 struct WorkoutView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var CalendarPage = false
@@ -387,8 +211,36 @@ struct WorkoutView: View {
     @State var currentImages: [String] = ["rec1", "rec2", "rec3", "rec4", "rec5"]
     @StateObject private var fitnessManager = FitnessManager()
     @State private var isLoading = false
-    @State private var recA: [String: String] = [:]
+    
+    func predictButtonFitnessTapped() {
+      let currentDate = Date()
+      let formatter = DateFormatter()
+      formatter.dateFormat = "yyyy-MM-dd"
+      var dateToUse = currentDate
+      let dateString = formatter.string(from: dateToUse)
 
+      guard let userId = UserDefaults.standard.string(forKey: "currentUserID") else {
+          print("No user id found.")
+          return
+      }
+      
+      fitnessManager.predictFitness(userId: userId, date: dateString) { result in
+                      switch result {
+                      case .success(let fitness):
+                          DispatchQueue.main.async {
+                              fitnessManager.fitness = fitness
+                              recA = fitness.sorted(by: { $0.key < $1.key })
+                              isLoading = false
+                          }
+                      case .failure(let error):
+                          DispatchQueue.main.async {
+                              print("Error: \(error)")
+                              isLoading = false
+                          }
+                      }
+                  }
+  }
+    
     var body: some View {
         VStack {
             if isLoading {
@@ -430,16 +282,23 @@ struct WorkoutView: View {
                             .foregroundColor(Color.gray)
                     }
                     .fullScreenCover(isPresented: $RecommendationsView, content: {
-                        RecView(recA: recA)
+                        let recADict = Dictionary(uniqueKeysWithValues: recA)
+                        RecView(recA: recADict)
                     })
                     
                     Spacer().frame(width: 11)
                 }
+
+
+
+
+
+
                 
                 ScrollView(.horizontal) {
                     LazyHStack(spacing: 10) {
                         Spacer().frame(width: 1)
-                        ForEach(recA.sorted(by: { $0.key < $1.key }), id: \.key) { activity, priority in
+                        ForEach(recA, id: \.key) { activity, priority in
                                 ZStack {
                                     Rectangle()
                                         .fill(Color.gray)
@@ -468,34 +327,59 @@ struct WorkoutView: View {
                     }
                 }
                 .padding(.top)
+                Button(action: predictButtonFitnessTapped) {
+                    Text("Get Exercises")
+                        .font(.system(size: 15.0, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color("Color 4"))
+                        .cornerRadius(10)
+                }
+                .padding(0)
                 
             }
         }
         .onAppear {
             isLoading = true
-            recA = [
-                    "Cycling, 10-11.9 mph, light": "0.0",
-                    "Cycling, <10 mph, leisure bicycling": "0.0",
-                    "Cycling, >20 mph, racing": "0.0",
-                    "Cycling, mountain bike, bmx": "0.0",
-                    "Weight lifting, body building, vigorous": "1.0"
-                ]
-            isLoading = false
-//            fitnessManager.predictFitness(userId: "123", date: "2022-01-01") { result in
-//                switch result {
-//                case .success(let fitness):
-//                    DispatchQueue.main.async {
-//                        fitnessManager.fitness = fitness
-//                        recA = fitness.sorted(by: { $0.key < $1.key }).map { $0.key }
-//                        isLoading = false
-//                    }
-//                case .failure(let error):
-//                    DispatchQueue.main.async {
-//                        print("Error: \(error)")
-//                        isLoading = false
-//                    }
-//                }
-//            }
+            if ( trained ){
+                let currentDate = Date()
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd"
+                var dateToUse = currentDate
+                let dateString = formatter.string(from: dateToUse)
+
+                guard let userId = UserDefaults.standard.string(forKey: "currentUserID") else {
+                    print("No user id found.")
+                    return
+                }
+                
+                fitnessManager.predictFitness(userId: userId, date: dateString) { result in
+                                switch result {
+                                case .success(let fitness):
+                                    DispatchQueue.main.async {
+                                        fitnessManager.fitness = fitness
+                                        recA = fitness.sorted(by: { $0.key < $1.key })
+                                        isLoading = false
+                                    }
+                                case .failure(let error):
+                                    DispatchQueue.main.async {
+                                        print("Error: \(error)")
+                                        isLoading = false
+                                    }
+                                }
+                            }
+            }
+            else{
+              
+                recA = [
+                        ("Cycling, 10-11.9 mph, light", "0.0"),
+                        ("Cycling, <10 mph, leisure bicycling", "0.0"),
+                        ("Cycling, >20 mph, racing", "0.0"),
+                        ("Cycling, mountain bike, bmx", "0.0"),
+                        ("Weight lifting, body building, vigorous", "1.0")
+                    ].sorted(by: { $0.0 < $1.0 })
+                isLoading = false
+            }
         }
     }
 }
@@ -503,13 +387,16 @@ struct WorkoutView: View {
 
 
 
+enum NetworkError: Error {
+    case invalidResponse
+}
 
 class FitnessManager: ObservableObject {
     @Published var fitness: [String: String] = [:]
 
     func predictFitness(userId: String, date: String, completion: @escaping (Result<[String: String], Error>) -> Void) {
         // Define the endpoint URL for the predictFitness route
-        let baseURL = URL(string: "http://your-flask-server-url.com")!
+        let baseURL = URL(string: "http://127.0.0.1:5000/")!
         let url = baseURL.appendingPathComponent("/predictFitness")
 
         // Prepare the request body
@@ -538,7 +425,9 @@ class FitnessManager: ObservableObject {
                 do {
                     let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String]
                     if let fitness = responseJSON {
+                        print(fitness)
                         completion(.success(fitness))
+                        
                     } else {
                         completion(.failure(NetworkError.invalidResponse))
                     }
@@ -551,10 +440,6 @@ class FitnessManager: ObservableObject {
         }.resume()
     }
 }
-
-//enum NetworkError: Error {
-//    case invalidResponse
-//}
 
 
 struct RecView: View {
@@ -681,85 +566,205 @@ struct CardBack: View {
 }
 
 
-
-    
-//struct PastView: View {
-//    @Environment(\.presentationMode) var presentationMode
-//    @State var isFlipped = Array(repeating: false, count: 6)
-//    @State var backDegree = Array(repeating: 0.0, count: 6)
-//    @State var frontDegree = Array(repeating: -90.0, count: 6)
-//    let durationAndDelay: CGFloat = 0.3
-//    @State var counts = Array(repeating: 0, count: 6)
-//
-//    func flip(index: Int) {
-//        isFlipped[index] = !isFlipped[index]
-//        if isFlipped[index] {
-//            withAnimation(.linear(duration: durationAndDelay)) {
-//                backDegree[index] = 90
-//            }
-//            withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)) {
-//                frontDegree[index] = 0
-//            }
-//        } else {
-//            withAnimation(.linear(duration: durationAndDelay)) {
-//                frontDegree[index] = -90
-//            }
-//            withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)) {
-//                backDegree[index] = 0
-//            }
-//        }
-//    }
-//
-//    var body: some View {
-//        VStack {
-//            Button(action: {
-//                presentationMode.wrappedValue.dismiss()
-//            }) {
-//                Image("downarrow")
-//                    .resizable()
-//                    .frame(width: 40, height: 40)
-//            }
-//            ScrollView(.vertical) {
-//                LazyVStack(spacing: 10) {
-//                    Spacer().frame(width: 1)
-//                    ForEach(0..<5) { index in
-//                        let imageName = "rec\(index + 1)"
-//
-//                        ZStack {
-//                            CardFront(w: 300, h: 150, imgName: imageName, degree: $frontDegree[index], index: index) {flip(index: index)}
-//                            CardBack(w: 300, h: 150, imgName: imageName, size: true, degree: $backDegree[index], count: $counts[index])
-//                        }
-//                        .onTapGesture {
-//                            flip(index: index)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
-
-
-
-
-
-
-
-
-
-
 struct CalendarView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var DayPage = false
     
     @State private var dayPage: Int?
     @State var isDayViewPresented: Bool = false
-//    @State var selectedDay: Int?
     @State var selectedDay: DayIdentifier?
+    
+   
+    @State private var CalendarPage = false
+    @State private var RecommendationsView = false
+    @State private var PastActView = false
+    @State var currentImages: [String] = ["rec1", "rec2", "rec3", "rec4", "rec5"]
+    @StateObject private var fitnessManager = FitnessManager()
+    @State private var isLoading = false
+
+    
     let calendar = Calendar.current
     let currentDate = Date()
     
+    
+    let baseURL = URL(string: "http://127.0.0.1:5000/")
+    
+    
+    func trainModel(userId: String, completion: @escaping () -> Void) {
+        // Define the endpoint URL for the predictSleep route
+        guard let baseURL = baseURL,
+                  var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+            else {
+                print("Invalid base URL")
+                return
+            }
+            
+            urlComponents.path.append("/cleanFit")
+            
+            // Prepare the request URL
+            guard let url = urlComponents.url else {
+                print("Invalid URL")
+                return
+            }
+
+        // Prepare the request body
+        let requestBody: [String: String] = ["userId": userId]
+
+        // Create the request object
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        // Set the request body
+        request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody)
+
+        // Send the request
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("Error: (error.localizedDescription)")
+            }
+
+            if let data = data {
+                // Parse and handle the response data
+                if let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    print("Response: (responseJSON)")
+                }
+            }
+        }.resume()
+        
+        trained = true
+        completion()
+    }
+
+    // Example function to send a POST request to predictSleep route
+    func predictActivity(userId: String, date: String, completion: @escaping (Result<[String: Any], Error>) -> Void) {
+        // Define the endpoint URL for the predictSleep route
+        guard let baseURL = baseURL,
+                  var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+            else {
+                print("Invalid base URL")
+                return
+            }
+            
+            urlComponents.path.append("/predictActivity")
+            
+            // Prepare the request URL
+            guard let url = urlComponents.url else {
+                print("Invalid URL")
+                return
+            }
+
+        // Prepare the request body
+        let requestBody: [String: String] = [
+            "userId": userId,
+            "date": date
+        ]
+
+        // Create the request object
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        // Set the request body
+        request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody)
+
+        // Send the request
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("Error: (error.localizedDescription)")
+            }
+
+            if let data = data {
+                // Parse and handle the response data
+                if let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    print("Response: (responseJSON)")
+                    completion(.success(responseJSON)) // Pass the response data to the completion handler
+                }
+            }
+        }.resume()
+    }
+
+
+    func trainButtonTapped() {
+        guard let userId = UserDefaults.standard.string(forKey: "currentUserID") else {
+            print("No user id found.")
+            return
+        }
+        
+        trainModel(userId: userId){
+            print("Training completed.")
+        }
+    }
+    
+    
+        func predictButtonTapped() {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd"
+
+                var dateToUse = currentDate
+
+                if let selectedDay = selectedDay {
+                    var components = DateComponents()
+                    components.year = calendar.component(.year, from: currentDate)
+                    components.month = calendar.component(.month, from: currentDate)
+                    components.day = selectedDay.day
+
+                    if let date = calendar.date(from: components) {
+                        dateToUse = date
+                    }
+                }
+
+                let dateString = formatter.string(from: dateToUse)
+
+                guard let userId = UserDefaults.standard.string(forKey: "currentUserID") else {
+                    print("No user id found.")
+                    return
+                }
+
+            predictActivity(userId: userId, date: dateString) { result in
+                    switch result {
+                    case .success(let response):
+                        // Assign the response to a variable or perform any desired action
+                        let serverResponse = response
+                        print("Received PREDICTION response: \(serverResponse)")
+                        
+                        let calorieBurn = serverResponse["Calorie Burn Prediction"]
+                        let db = Firestore.firestore()
+                        db.collection("Users").document(userId).collection("Predictions").document(dateString).setData([
+                            "calorie_burn": calorieBurn,
+                            "date": dateString])
+                        
+                        // Save serverResponse["calorie_burn"] and dateString to Firestore
+//                        if let calorieBurn = serverResponse["Calorie Burn Prediction"] as? NSNumber {
+//                            let db = Firestore.firestore()
+//                            db.collection("Users").document(userId).collection("Predictions").document(dateString).setData([
+//                                "calorie_burn": calorieBurn.doubleValue,
+//                                "date": dateString
+//                            ]) { err in
+//                                if let err = err {
+//                                    print("Error writing document: \(err)")
+//                                } else {
+//                                    print("Document successfully written!")
+//                                }
+//                            }
+//                        } else {
+//                            print("Calorie burn not found in response")
+//                        }
+
+                    case .failure(let error):
+                        // Handle the error
+                        print("Request failed with error: \(error.localizedDescription)")
+                    }
+                }
+       
+        
+    }
+    
+    
+
+    
     var body: some View {
+        
         
         func currentMonthName() -> String {
             let dateFormatter = DateFormatter()
@@ -838,6 +843,29 @@ struct CalendarView: View {
                 
             }
             Spacer()
+            Button(action: trainButtonTapped) {
+                Text("Train")
+                    .font(.system(size: 15.0, weight: .bold))
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color("Color 4"))
+                    .cornerRadius(10)
+            }
+            .padding(80)
+            
+            Button(action: predictButtonTapped) {
+                Text("Predict Activity")
+                    .font(.system(size: 15.0, weight: .bold))
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color("Color 4"))
+                    .cornerRadius(10)
+            }
+            .padding(0)
+            
+            
+         
+    //        }
         }
     }
 }
@@ -860,6 +888,8 @@ struct DayView: View {
     @State var selectedExercises: [Exercise?] = [nil, nil, nil] // For 3 workouts
     @State var durations: [String] = ["", "", ""] // For 3 durations
     @State var calories: [Float] = [0, 0, 0]
+    @State var selectedDay: DayIdentifier?
+    
   
     var cancellables: Set<AnyCancellable> = []
     
@@ -900,12 +930,6 @@ struct DayView: View {
                     Divider()
                 }
 
-
-
-
-
-
-                
                 TotalCaloriesView(totalCalories: Float(sumCalories))
 
             }
@@ -988,6 +1012,33 @@ struct DayView: View {
     }
 
 
+//    func sendExerciseDurationPairToFirestore(pair: (exercise: Exercise, duration: String), calories: Float, completion: @escaping (Error?) -> Void) {
+//        guard let currentUserID = UserDefaults.standard.string(forKey: "currentUserID") else {
+//            print("Unable to fetch currentUserID from UserDefaults")
+//            return
+//        }
+//
+//        let db = Firestore.firestore()
+//
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd, EEEE"
+//        let date = dateFormatter.string(from: Date())
+//
+//        db.collection("Users").document(currentUserID).collection("ExerciseEntries").document().setData([
+//            "exercise": pair.exercise.name,
+//            "hours": pair.duration,
+//            "calories_burnt": calories,
+//            "date": date
+//        ]) { error in
+//            if let error = error {
+//                print("Error updating document: \(error)")
+//                completion(error)
+//            } else {
+//                print("ExerciseDurationPair successfully updated in Firestore")
+//                completion(nil)
+//            }
+//        }
+//    }
     func sendExerciseDurationPairToFirestore(pair: (exercise: Exercise, duration: String), calories: Float, completion: @escaping (Error?) -> Void) {
         guard let currentUserID = UserDefaults.standard.string(forKey: "currentUserID") else {
             print("Unable to fetch currentUserID from UserDefaults")
@@ -998,7 +1049,24 @@ struct DayView: View {
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd, EEEE"
-        let date = dateFormatter.string(from: Date())
+        
+        let selectedDate: Date
+        
+        if let selectedDay = selectedDay {
+            var dateComponents = DateComponents()
+            dateComponents.day = selectedDay.day
+//            dateComponents.month = selectedDay.month
+//            dateComponents.year = selectedDay.year
+            selectedDate = Calendar.current.date(from: dateComponents)!
+        } else {
+            var dateComponents = DateComponents()
+            dateComponents.day = day
+            dateComponents.month = month
+            dateComponents.year = year
+            selectedDate = Calendar.current.date(from: dateComponents)!
+        }
+
+        let date = dateFormatter.string(from: selectedDate)
 
         db.collection("Users").document(currentUserID).collection("ExerciseEntries").document().setData([
             "exercise": pair.exercise.name,
@@ -1015,7 +1083,6 @@ struct DayView: View {
             }
         }
     }
-
 
 
 }

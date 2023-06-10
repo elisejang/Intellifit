@@ -21,7 +21,6 @@ struct HomeView: View {
                 Spacer()
                 VStack(spacing: 0){
 //                    HomeCarousel()
-                    
                     VStack{
                         
                         NavigationLink(destination: WorkoutView(), tag: Tab.workouts, selection: $selectedTab) {
