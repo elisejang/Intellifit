@@ -334,14 +334,14 @@ struct UserInfoView: View {
             
         }.padding()
         
-        HStack {
-            Text("Fitness Goal:")
-                .font(.system(size: 16.0, weight: .semibold))
-                .foregroundColor(Color("Color 4"))
-            
-            DropdownView()
-        }
-        .padding(10)
+//        HStack {
+//            Text("Fitness Goal:")
+//                .font(.system(size: 16.0, weight: .semibold))
+//                .foregroundColor(Color("Color 4"))
+//
+//            DropdownView()
+//        }
+//        .padding(10)
         
         
         Button(action: nextButtonTapped) {
