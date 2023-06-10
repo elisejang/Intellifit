@@ -38,6 +38,49 @@ struct SleepView: View {
         formatter.timeStyle = .short
         return formatter.string(from: time)
     }
+    
+    // Define the base URL of the Flask server
+    let baseURL = URL(string: "http://your-flask-server-url.com%22%29%21/")
+
+    // Example function to send a POST request to predictSleep route
+    func predictSleep(calories: Float) {
+        guard let baseURL = baseURL else {
+                print("Invalid base URL")
+                return
+            }
+
+            // Define the endpoint URL for the predictSleep route
+            let url = baseURL.appendingPathComponent("/predictSleep")
+
+            // Prepare the request body
+            let requestBody: [String: Float] = [
+                "calories": calories
+            ]
+
+            // Create the request object
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+            // Set the request body
+            request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody)
+
+            // Send the request
+            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let error = error {
+                    print("Error: \(error.localizedDescription)")
+                    return
+                }
+
+                if let data = data {
+                    // Parse and handle the response data
+                    if let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        print("Response: \(responseJSON)")
+                    }
+                }
+            }.resume()
+    }
+
 }
 
 struct TimePickerView: View {
@@ -98,48 +141,6 @@ struct TimePickerView: View {
             .padding()
         }
     }
-    // Define the base URL of the Flask server
-    let baseURL = URL(string: "http://your-flask-server-url.com%22%29%21/")
-
-    // Example function to send a POST request to predictSleep route
-    func predictSleep(calories: Float) {
-        guard let baseURL = baseURL else {
-                print("Invalid base URL")
-                return
-            }
-
-            // Define the endpoint URL for the predictSleep route
-            let url = baseURL.appendingPathComponent("/predictSleep")
-
-            // Prepare the request body
-            let requestBody: [String: Float] = [
-                "calories": calories
-            ]
-
-            // Create the request object
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-            // Set the request body
-            request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody)
-
-            // Send the request
-            URLSession.shared.dataTask(with: request) { (data, response, error) in
-                if let error = error {
-                    print("Error: \(error.localizedDescription)")
-                    return
-                }
-
-                if let data = data {
-                    // Parse and handle the response data
-                    if let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                        print("Response: \(responseJSON)")
-                    }
-                }
-            }.resume()
-    }
-
     // Call the predictSleep function
 //    predictSleep()
 }

@@ -261,6 +261,12 @@ struct MealCardView: View {
 struct MacroSection: View {
     let title: String
     let value: String
+    let value: String
+    let meal: String
+    let breakfast: String
+    let lunch: String
+    let dinner: String
+    
     
     var body: some View {
         VStack {
