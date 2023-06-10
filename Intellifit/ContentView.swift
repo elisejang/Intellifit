@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+//import Firebase
+
 
 struct ContentView: View {
     @State var isNewUser = true
@@ -43,11 +45,11 @@ struct ContentView: View {
                                 Image(systemName: "moon.fill")
                                 Text("Sleep")
                             }
-                        ProfileView()
-                            .tabItem() {
-                                Image(systemName: "person.crop.circle")
-                                Text("Profile")
-                            }
+//                        ProfileView()
+//                            .tabItem() {
+//                                Image(systemName: "person.crop.circle")
+//                                Text("Profile")
+//                            }
                     }
                 }
             }
