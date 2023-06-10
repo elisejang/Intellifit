@@ -4,7 +4,6 @@
 //
 //  Created by Megan Nguyen on 6/7/23.
 //
-
 import SwiftUI
 import FirebaseFirestore
 import Foundation
@@ -410,9 +409,9 @@ struct ActivityHistoryView: View {
     
     var body: some View{
 //        ScrollView{
-            CalendarView().padding()
-            Text("[User name]'s Month of Activities").padding(.bottom, 30).bold()
-        Text("For each day above, click and input workout activities you have done or want to do on that day. Tap 'Begin' when complete!").padding()
+//            CalendarView().padding()
+//            Text("[User name]'s Month of Activities").padding(.bottom, 30).bold()
+        Text(" Tap 'Begin' when complete!").padding()
             Button(action: nextButtonTapped) {
                 Text("Begin")
                     .font(.system(size: 15.0, weight: .bold))

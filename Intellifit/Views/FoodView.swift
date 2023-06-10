@@ -18,14 +18,17 @@ struct FoodView: View {
 //    @State var proteinP :Int
 //    @State var carbP :Int
 //    @State var fatP :Int
-    let mealPlans = [
+//    let mealPlans = [
+//
+//            MealPlan(meal: "meal1", breakfast: "eggs", lunch: "caesar salad", dinner: "salmon", dProtein: "5", dCarb: "5", dFat: "5"),
+//            MealPlan(meal: "meal2", breakfast: "eggs", lunch: "caesar salad", dinner: "salmon", dProtein: "5", dCarb: "5", dFat: "5"),
+//            MealPlan(meal: "meal3", breakfast: "eggs", lunch: "caesar salad", dinner: "salmon", dProtein: "5", dCarb: "5", dFat: "5"),
+//            MealPlan(meal: "meal4", breakfast: "eggs", lunch: "caesar salad", dinner: "salmon", dProtein: "5", dCarb: "5", dFat: "5"),
+//            MealPlan(meal: "meal5", breakfast: "eggs", lunch: "caesar salad", dinner: "salmon", dProtein: "5", dCarb: "5", dFat: "5")
+//    ]
+    @State var mealPlans: [MealPlan] = []
 
-            MealPlan(meal: "meal1", breakfast: "eggs", lunch: "caesar salad", dinner: "salmon", dProtein: "5", dCarb: "5", dFat: "5"),
-            MealPlan(meal: "meal2", breakfast: "eggs", lunch: "caesar salad", dinner: "salmon", dProtein: "5", dCarb: "5", dFat: "5"),
-            MealPlan(meal: "meal3", breakfast: "eggs", lunch: "caesar salad", dinner: "salmon", dProtein: "5", dCarb: "5", dFat: "5"),
-            MealPlan(meal: "meal4", breakfast: "eggs", lunch: "caesar salad", dinner: "salmon", dProtein: "5", dCarb: "5", dFat: "5"),
-            MealPlan(meal: "meal5", breakfast: "eggs", lunch: "caesar salad", dinner: "salmon", dProtein: "5", dCarb: "5", dFat: "5")
-    ]
+
     @State private var isLoading = false
     @State private var FoodDict: [String: String] = [:]
     @StateObject private var foodManager = FoodManager()
@@ -59,6 +62,9 @@ struct FoodView: View {
                 "['Granola', 'Chicken and Miso Ramen Noodle Soup', 'Creamy zucchini and ham pasta']": "[2000.09, 89.41, 84.45, 214.35]",
                 "['Protein Packed Carrot Muffins', 'Ground Pork Ramen', 'Low Carb Brunch Burger']": "[1999.97, 146.64, 105.17, 85.43]",
                 "['Strawberry Shortcake w. Mini Strawberry PopTarts', 'Tex-Mex Burger', 'Cavatelli with Chicken Sausage and Kale']": "[1999.96, 97.1, 87.15, 194.85]"]
+                
+                
+                
                 isLoading = false
 //                foodManager.predictMeals(userId: "123", date: "2022-01-01") { result in
 //                    switch result {
@@ -76,6 +82,25 @@ struct FoodView: View {
 //                    }
 //                }
                 
+                for (key, value) in FoodDict {
+                    let mealsString = key.trimmingCharacters(in: CharacterSet(charactersIn: "[]"))
+                    let meals = mealsString.components(separatedBy: "', '")
+                    
+                    let nutrientValuesString = value.trimmingCharacters(in: CharacterSet(charactersIn: "[]"))
+                    let nutrientValues = nutrientValuesString.components(separatedBy: ", ")
+                    
+                    let mealPlan = MealPlan(
+                        meal: "Meal Plan \(mealPlans.count + 1)",
+                        breakfast: meals[0],
+                        lunch: meals[1],
+                        dinner: meals[2],
+                        dProtein: nutrientValues[2],
+                        dCarb: nutrientValues[3],
+                        dFat: nutrientValues[1]
+                    )
+                    
+                    mealPlans.append(mealPlan)
+                }
             }
         }
     }
