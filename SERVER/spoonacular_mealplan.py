@@ -2,7 +2,7 @@ import requests
 import argparse
 
 # Spoonacular API credentials
-API_KEY = 'ef73506bbfbf4d16ab58eaa336f1bf94'
+API_KEY = '1165d38b5ebc4dd9be7a29c0b0302c61'
 
 def get_meal_options(target_calories, filters=None):
     url = "https://api.spoonacular.com/mealplanner/generate"
@@ -41,10 +41,10 @@ def get_meal_options(target_calories, filters=None):
 if __name__ == "__main__":
     # Parse command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("--target_calories", type=int, help="Target number of calories for the day")
+    parser.add_argument("--target_calories", type=str, help="Target number of calories for the day")
     args = parser.parse_args()
 
-    target_calories = args.target_calories
+    target_calories = float(args.target_calories)
 
     # Get meal options
     options = []

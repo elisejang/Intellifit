@@ -101,7 +101,7 @@ criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=0.01)
 
 # Train the model
-num_epochs = 10000
+num_epochs = 1000
 for epoch in range(num_epochs):
     for batch in dataloader:
         inputs_batch = batch[:, :-1].float()
@@ -117,7 +117,7 @@ for epoch in range(num_epochs):
         optimizer.step()
 
     # Print the loss for every epoch
-    print(f"Epoch {epoch+1}/{num_epochs}, Loss: {loss.item()}")
+    # print(f"Epoch {epoch+1}/{num_epochs}, Loss: {loss.item()}")
 
 transformed_outputs = torch.clamp(outputs, 200, 1000)
 

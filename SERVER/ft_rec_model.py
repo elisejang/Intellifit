@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
-from torchsummary import summary
+
 import ast
 import torch.nn.functional as F
 import argparse
@@ -119,7 +119,7 @@ for epoch in range(num_epochs):
         optimizer.step()
 
     # Print the loss for every epoch
-    print(f"Epoch {epoch+1}/{num_epochs}, Loss: {loss.item()}")
+    # print(f"Epoch {epoch+1}/{num_epochs}, Loss: {loss.item()}")
 
 torch.save(model.state_dict(), str(user) + "_fitness_model.pth")
 print("Model saved successfully.")       
